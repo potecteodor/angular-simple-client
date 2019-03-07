@@ -1,0 +1,28 @@
+@import '~@angular/material/theming';
+
+@import 'app/scss/common';
+@import 'app/scss/default-colors';
+
+@include mat-core();
+
+// Generate  color classes for custom palettes
+$custom_palettes: (
+  custom-white: $custom-white,
+  custom-black: $custom-black,
+  app-color-primary: $app-color-primary,
+  app-color-secondary: $app-color-secondary,
+  app-color-warn: $app-color-warn,
+);
+@include custom-color-classes($custom_palettes);
+// Define the primary, accent and warn palettes
+$default-primary-palette: mat-palette($app-color-primary);
+$default-accent-palette: mat-palette($app-color-secondary);
+$default-warn-palette: mat-palette($app-color-warn);
+// Create the Material theme object
+$theme: mat-light-theme(
+  $default-primary-palette,
+  $default-accent-palette,
+  $default-warn-palette
+);
+@include angular-material-theme($theme);
+@import 'app/scss/default-theme';

@@ -1,0 +1,17 @@
+@import 'mixins/_breakpoints';
+@import 'partials/_reset';
+@import 'partials/_normalize';
+@import 'partials/_helpers';
+@import 'partials/_colors';
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.list-row {
+  line-height: 48px;
+}

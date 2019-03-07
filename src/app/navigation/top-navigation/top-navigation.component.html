@@ -1,0 +1,29 @@
+<mat-toolbar color="primary">
+  <div fxLayout="row" fxFlex fxLayoutAlign="space-between center">
+    <div>
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="sideNav.toggle()"
+        *ngIf="(isHandset$ | async)"
+      >
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span>intranet-client</span>
+    </div>
+
+    <div class="user-info">
+      <ng-container *ngIf="user; else: noUser">
+        <div>Data</div>
+        <div *ngIf="user?.displayName">{{ user?.displayName }}</div>
+        <!-- <img [src]="user?.photoURL" *ngIf="user?.photoURL" class="photo" /> -->
+
+        <div class="logout" (click)="logout()">Logout</div>
+      </ng-container>
+      <ng-template #noUser>
+        <div *ngIf="router.url !== '/login'">Sign In</div>
+      </ng-template>
+    </div>
+  </div>
+</mat-toolbar>
