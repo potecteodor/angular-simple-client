@@ -17,6 +17,7 @@ import {
   MatRadioModule,
   MatSelectModule,
   MatSidenavModule,
+  MatSnackBarModule,
   MatSortModule,
   MatTableModule,
   MatTabsModule,
@@ -24,6 +25,7 @@ import {
   MatTooltipModule,
   MatTreeModule,
 } from '@angular/material'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 @NgModule({
   declarations: [],
@@ -33,6 +35,7 @@ import {
     FormsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
+    BrowserAnimationsModule,
     // material
     MatSidenavModule,
     MatToolbarModule,
@@ -54,6 +57,7 @@ import {
     MatInputModule,
     MatTabsModule,
     MatTooltipModule,
+    MatSnackBarModule,
   ],
   exports: [
     // angular
@@ -61,6 +65,7 @@ import {
     FormsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
+    BrowserAnimationsModule,
     // material
     MatSidenavModule,
     MatToolbarModule,
@@ -82,6 +87,7 @@ import {
     MatInputModule,
     MatTabsModule,
     MatTooltipModule,
+    MatSnackBarModule,
   ],
 })
 export class AppSharedModule {}

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core'
 import { RouterModule } from '@angular/router'
 import { AppSharedModule } from '../../modules/app-shared.module'
 import { DashboardComponent } from './dashboard.component'
+import { DashboardService } from './dashboard.service'
 
 @NgModule({
   declarations: [DashboardComponent],
@@ -14,5 +15,6 @@ import { DashboardComponent } from './dashboard.component'
       },
     ]),
   ],
+  providers: [DashboardService],
 })
 export class DashboardModule {}

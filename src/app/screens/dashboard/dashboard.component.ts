@@ -1,6 +1,7 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout'
 import { Component, OnInit } from '@angular/core'
 import { map } from 'rxjs/operators'
+import { DashboardService } from './dashboard.service'
 
 @Component({
   selector: 'app-dashboard',
@@ -29,7 +30,16 @@ export class DashboardComponent implements OnInit {
     })
   )
 
-  constructor(private breakpointObserver: BreakpointObserver) {}
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    private srv: DashboardService
+  ) {}
 
   ngOnInit() {}
+
+  doGet() {
+    this.srv.getAll().subscribe(d => {
+      console.log(d)
+    })
+  }
 }
