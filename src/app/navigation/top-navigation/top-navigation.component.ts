@@ -4,7 +4,6 @@ import { MatSidenav } from '@angular/material'
 import { Router } from '@angular/router'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
-import { AuthService } from '../../auth/auth.service'
 
 @Component({
   selector: 'app-top-navigation',
@@ -21,25 +20,13 @@ export class TopNavigationComponent implements OnInit {
   @Input()
   sideNav: MatSidenav
 
-  constructor(
-    private breakpointObserver: BreakpointObserver,
-    public router: Router,
-    private authService: AuthService
-  ) {}
+  constructor(private breakpointObserver: BreakpointObserver, public router: Router) {}
 
   ngOnInit() {
     this.setData()
   }
 
-  setData() {
-    this.authService.getUser().subscribe(user => {
-      this.user = user
-    })
-  }
+  setData() {}
 
-  logout() {
-    this.authService.signOut().then(() => {
-      this.router.navigate(['/'])
-    })
-  }
+  logout() {}
 }

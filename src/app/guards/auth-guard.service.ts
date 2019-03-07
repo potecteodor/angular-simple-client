@@ -5,13 +5,12 @@ import {
   Router,
   RouterStateSnapshot,
 } from '@angular/router'
-import { AuthService } from '../auth/auth.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-  constructor(public authService: AuthService, public router: Router) {}
+  constructor(public router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     const url: string = state.url
@@ -19,12 +18,12 @@ export class AuthGuard implements CanActivate {
   }
 
   checkLogin(url: string): boolean {
-    if (sessionStorage.getItem('mvpAuth') === 'true') {
+    if (sessionStorage.getItem('appAuth') === 'true') {
       // Store the attempted URL for redirecting
       // this.authService.redirectUrl = url
       return true
     }
-    console.log('not loggen in')
+    console.log('not logged in')
 
     // Navigate to the login page with extras
     this.router.navigate(['/login'])

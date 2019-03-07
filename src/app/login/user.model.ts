@@ -1,5 +1,5 @@
 export class User {
-    _id;
-    email: '';
-    pass: '';
+  _id
+  email: ''
+  pass: ''
 }
