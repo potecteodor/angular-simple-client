@@ -1,0 +1,31 @@
+<mat-card class="registerForm">
+  <mat-card-title>Register</mat-card-title>
+  <form [formGroup]="registerForm" fxLayout="column">
+
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Display Name</mat-label>
+      <input matInput formControlName="display_name">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input matInput formControlName="password" [type]="hide ? 'text' : 'password'">
+      <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Confirm Password</mat-label>
+      <input matInput formControlName="repeat_password" [type]="hide ? 'text' : 'password'">
+      <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+    </mat-form-field>
+
+    <button mat-raised-button color="accent" (click)="onRegister()" [disabled]="registerForm.invalid">
+      Register!
+    </button>
+  </form>
+</mat-card>

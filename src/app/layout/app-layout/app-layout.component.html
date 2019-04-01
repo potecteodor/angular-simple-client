@@ -1,8 +1,9 @@
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #drawer class="sidenav app-color-primary-A100" fixedInViewport="true"
+  <mat-sidenav #drawer class="sidenav custom-white-500" fixedInViewport="true"
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
     [opened]="!(isHandset$ | async)">
     <mat-toolbar class="custom-white-500">Menu</mat-toolbar>
+    <br />
     <app-left-navigation></app-left-navigation>
   </mat-sidenav>
   <mat-sidenav-content>
