@@ -1,10 +1,11 @@
 <mat-toolbar color="primary">
   <div fxLayout="row" fxFlex fxLayoutAlign="space-between center">
     <div>
-      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="sideNav.toggle()" *ngIf="(isHandset$ | async)">
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="sideNav.toggle()"
+        *ngIf="(isHandset$ | async)">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span>angular-simple-client</span>
+      <span>Task Helper</span>
     </div>
     <div class="user-info">
       <ng-container *ngIf="user; else: noUser">

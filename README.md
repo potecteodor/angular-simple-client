@@ -1,2 +1,3 @@
-# angular-simple-client
-simple angular client 
+# angular-task-manager
+
+angular task manager

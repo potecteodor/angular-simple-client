@@ -1,8 +1,8 @@
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout'
-import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core'
-import { NavigationEnd, NavigationStart, Router } from '@angular/router'
-import { Observable } from 'rxjs'
-import { map } from 'rxjs/operators'
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
+import { NavigationEnd, NavigationStart, Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -10,8 +10,6 @@ import { map } from 'rxjs/operators'
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit, OnDestroy {
-  title = 'ActTime Business Platform'
-
   user: any
 
   loading = true
@@ -60,9 +58,9 @@ export class AppComponent implements OnInit, OnDestroy {
     this.messages = data
   }
 
-  setData() {}
+  setData() { }
 
-  logout() {}
+  logout() { }
 
   ngOnDestroy() {
     // avoid memory leaks here by cleaning up after ourselves. If we

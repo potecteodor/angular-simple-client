@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'http://localhost:3000',
+  baseUrl: 'http://localhost:40402',
 }
 
 /*
@@ -14,4 +14,5 @@ export const environment = {
  * because it will have performance impact when throw error
  */
 
-import 'zone.js/dist/zone-error' // Included with Angular CLI.
+import 'zone.js/dist/zone-error'; // Included with Angular CLI.
+

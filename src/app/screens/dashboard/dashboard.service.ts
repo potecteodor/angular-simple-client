@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core'
-import { BaseHttpService } from '../../core/services/base-http.service'
+import { Injectable } from '@angular/core';
+import { BaseHttpService } from '../../core/services/base-http.service';
 
 @Injectable()
 export class DashboardService {
-  constructor(private bHttp: BaseHttpService<any>) {}
+  constructor(private bHttp: BaseHttpService<any>) { }
 
   getAll() {
-    return this.bHttp.doGet('/samples')
+    return this.bHttp.doGet('/task/test')
   }
 }
