@@ -31,6 +31,7 @@
     "@angular/upgrade": "^6.0.0",
     "@ngx-translate/core": "^10.0.2",
     "@ngx-translate/http-loader": "^3.0.1",
+    "angular-crypto-js": "^1.0.7",
     "core-js": "^2.5.7",
     "firebase": "^5.5.9",
     "hammerjs": "^2.0.8",

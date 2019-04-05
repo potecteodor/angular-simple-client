@@ -5,6 +5,14 @@
 export const environment = {
   production: false,
   baseUrl: 'http://localhost:40402',
+  crypt: {
+    keySize: 256,
+    ivSize: 128,
+    iterations: 100,
+    ytfasf: 'dzNgvTmxit',
+    hh: 'dvqsyj30zb',
+    udhesaw: 'actTime',
+  },
 }
 
 /*
@@ -14,5 +22,4 @@ export const environment = {
  * because it will have performance impact when throw error
  */
 
-import 'zone.js/dist/zone-error'; // Included with Angular CLI.
-
+import 'zone.js/dist/zone-error' // Included with Angular CLI.

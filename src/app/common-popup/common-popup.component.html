@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>{{title}}</h1>
+<div mat-dialog-content>
+  <p [innerHTML]="message"></p>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-button *ngFor="let button of buttons" (click)="onBtnClick(button.type)"
+    cdkFocusInitial>{{button.text}}</button>
+</div>

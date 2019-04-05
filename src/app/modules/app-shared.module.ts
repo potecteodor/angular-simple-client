@@ -1,10 +1,32 @@
-import { DragDropModule } from '@angular/cdk/drag-drop';
-import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DragDropModule } from '@angular/cdk/drag-drop'
+import { CommonModule } from '@angular/common'
+import { NgModule } from '@angular/core'
+import { FlexLayoutModule } from '@angular/flex-layout'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 // tslint:disable-next-line:max-line-length
-import { MatButtonModule, MatCardModule, MatFormFieldModule, MatGridListModule, MatIconModule, MatInputModule, MatListModule, MatMenuModule, MatPaginatorModule, MatProgressBarModule, MatRadioModule, MatSelectModule, MatSidenavModule, MatSnackBarModule, MatSortModule, MatTableModule, MatTabsModule, MatToolbarModule, MatTooltipModule, MatTreeModule } from '@angular/material';
+import {
+  MatButtonModule,
+  MatCardModule,
+  MatDialogModule,
+  MatFormFieldModule,
+  MatGridListModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatMenuModule,
+  MatPaginatorModule,
+  MatProgressBarModule,
+  MatRadioModule,
+  MatSelectModule,
+  MatSidenavModule,
+  MatSnackBarModule,
+  MatSortModule,
+  MatTableModule,
+  MatTabsModule,
+  MatToolbarModule,
+  MatTooltipModule,
+  MatTreeModule,
+} from '@angular/material'
 
 @NgModule({
   declarations: [],
@@ -19,6 +41,7 @@ import { MatButtonModule, MatCardModule, MatFormFieldModule, MatGridListModule, 
     MatToolbarModule,
     MatListModule,
     MatIconModule,
+    MatDialogModule,
     MatProgressBarModule,
     MatGridListModule,
     MatButtonModule,
@@ -45,6 +68,7 @@ import { MatButtonModule, MatCardModule, MatFormFieldModule, MatGridListModule, 
     FlexLayoutModule,
     // material
     MatSidenavModule,
+    MatDialogModule,
     MatToolbarModule,
     MatListModule,
     MatIconModule,
@@ -67,4 +91,4 @@ import { MatButtonModule, MatCardModule, MatFormFieldModule, MatGridListModule, 
     MatSnackBarModule,
   ],
 })
-export class AppSharedModule { }
+export class AppSharedModule {}

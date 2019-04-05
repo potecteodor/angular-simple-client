@@ -28,5 +28,8 @@ export class TopNavigationComponent implements OnInit {
 
   setData() {}
 
-  logout() {}
+  logout() {
+    sessionStorage.removeItem('userInfo')
+    this.router.navigate(['/auth'])
+  }
 }
