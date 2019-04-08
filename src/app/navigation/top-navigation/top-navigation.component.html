@@ -7,9 +7,18 @@
       <span>Task Manager</span>
     </div>
     <div>
-      <button mat-button matTooltip="Logout" (click)="logout()">
+      <button mat-button [matMenuTriggerFor]="menu">{{user.display_name}}</button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="changePass()">
+          <mat-icon>settings</mat-icon>Change Password
+        </button>
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>power_off</mat-icon>Logout
+        </button>
+      </mat-menu>
+      <!--  <button mat-button matTooltip="Logout" (click)="logout()">
         <mat-icon>power_off</mat-icon>Logout
-      </button>
+      </button> -->
     </div>
 
   </div>

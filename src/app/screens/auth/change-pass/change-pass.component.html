@@ -1,0 +1,50 @@
+<h1 mat-dialog-title>Change Password</h1>
+<div mat-dialog-content>
+  <form name="changePasswordForm" [formGroup]="changePasswordForm" novalidate>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Current Password</mat-label>
+      <input matInput minlength="6" formControlName="currentPassword" [type]="hide1 ? 'password' : 'text'" required>
+      <mat-icon matSuffix (click)="hide1 = !hide1">{{hide1 ? 'visibility_off' : 'visibility'}}</mat-icon>
+      <mat-error *ngIf="changePasswordForm.hasError('required', 'currentPassword')">
+        Please enter your current Password!
+      </mat-error>
+      <mat-error *ngIf="changePasswordForm.hasError('minlength', 'currentPassword') ">
+        Minimum 6 characters!
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>New Password</mat-label>
+      <input matInput minlength="6" formControlName="newPassword" required [type]="hide2 ? 'password' : 'text'">
+      <mat-icon matSuffix (click)="hide2 = !hide2">{{hide2 ? 'visibility_off' : 'visibility'}}</mat-icon>
+      <mat-error *ngIf="changePasswordForm.hasError('required', 'newPassword')">
+        Please enter your new Password
+      </mat-error>
+      <mat-error *ngIf="changePasswordForm.hasError('minlength', 'newPassword') ">
+        Minimum 6 characters!
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Confirm new password</mat-label>
+      <input matInput formControlName="newPasswordConfirm" required [errorStateMatcher]="matcher"
+        [type]="hide3 ? 'password' : 'text'">
+      <mat-icon matSuffix (click)="hide3 = !hide3">{{hide3 ? 'visibility_off' : 'visibility'}}</mat-icon>
+      <mat-error *ngIf="changePasswordForm.hasError('notSame')">
+        Passwords do not match!
+      </mat-error>
+    </mat-form-field>
+
+    <div fxLayoutGap="10px">
+      <button mat-raised-button type="ok" class="submit-button" color="accent" (click)="onChangePassword()"
+        aria-label="SEND RESET LINK" [disabled]="changePasswordForm.invalid">
+        Change Password
+      </button>
+
+      <button mat-raised-button type="cancel" class="submit-button" color="warn" (click)="onCancel()">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>

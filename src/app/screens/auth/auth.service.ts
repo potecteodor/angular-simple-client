@@ -18,6 +18,20 @@ export class AuthService {
     return this.bHttp.doPost(this.urlPrefix + '/forgotPassword', { email: email })
   }
 
+  changePassword(newPass, id) {
+    return this.bHttp.doPost(this.urlPrefix + '/changePassword', {
+      newPass: newPass,
+      id: id,
+    })
+  }
+
+  checkPassword(pass, id) {
+    return this.bHttp.doPost(this.urlPrefix + '/checkPassword', {
+      password: pass,
+      id: id,
+    })
+  }
+
   checkEmail(email): any {
     return this.bHttp.doPost(this.urlPrefix + '/checkEmail', { email: email })
   }
