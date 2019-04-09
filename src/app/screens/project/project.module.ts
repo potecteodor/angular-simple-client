@@ -1,10 +1,12 @@
-import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { AppSharedModule } from '../../modules/app-shared.module';
-import { ProjectComponent } from './project.component';
+import { NgModule } from '@angular/core'
+import { RouterModule } from '@angular/router'
+import { AppSharedModule } from '../../modules/app-shared.module'
+import { ProjectComponent } from './project.component'
+import { ProjectService } from './project.service';
+import { CreateProjectComponent } from './create-project/create-project.component'
 
 @NgModule({
-  declarations: [ProjectComponent],
+  declarations: [ProjectComponent, CreateProjectComponent],
   imports: [
     AppSharedModule,
     RouterModule.forChild([
@@ -13,6 +15,7 @@ import { ProjectComponent } from './project.component';
         component: ProjectComponent,
       },
     ]),
-  ]
+  ],
+  providers: [ProjectService],
 })
-export class ProjectModule { }
+export class ProjectModule {}

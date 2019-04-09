@@ -1,3 +1,16 @@
-<p>
-  project works!
-</p>
+  <mat-toolbar class="app-color-secondary-900" fxLayout="row" fxLayoutAlign="space-between center">
+    Projects
+    <button mat-button (click)="sidenav.toggle()">
+      <mat-icon>add</mat-icon>
+      Create Project
+    </button>
+  </mat-toolbar>
+  <mat-sidenav-container class="projectCreator">
+    <mat-sidenav #sidenav position="end" mode="over" opened="true">
+      <app-create-project></app-create-project>
+    </mat-sidenav>
+
+    <div *ngIf="projects.length<1">
+      No projects! Create one.
+    </div>
+  </mat-sidenav-container>

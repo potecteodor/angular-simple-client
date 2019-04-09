@@ -1,0 +1,47 @@
+<mat-sidenav-container class="addSideNav">
+  <mat-toolbar class="app-color-secondary-900" fxLayout="row" fxLayoutAlign="space-between center">
+    Collaborators
+    <button mat-button (click)="sidenav.open()">
+      <mat-icon>add</mat-icon>
+      Add Collaborator
+    </button>
+  </mat-toolbar>
+  <mat-sidenav #sidenav disableClose="true" position="end" mode="over" opened="false">
+    <app-add-collaborator (eventOutput)="eventListener($event)">
+    </app-add-collaborator>
+  </mat-sidenav>
+
+  <div *ngIf="collaborators.length<1">
+    No collaborators! Add one.
+  </div>
+
+  <div *ngIf="collaborators.length>0">
+    <mat-form-field class="searchField">
+      <input matInput autocomplete="searchField" (keyup)="applyFilter($event.target.value)" placeholder="Search...">
+      <mat-icon matPrefix>search</mat-icon>
+    </mat-form-field>
+
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" matSort>
+
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+          <td mat-cell *matCellDef="let row"> {{row.email}} </td>
+        </ng-container>
+
+        <!-- Progress Column -->
+        <ng-container matColumnDef="display_name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Display Name </th>
+          <td mat-cell *matCellDef="let row"> {{row.display_name}} </td>
+        </ng-container>
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+        </tr>
+      </table>
+
+      <mat-paginator *ngIf="collaborators.length>5" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    </div>
+  </div>
+</mat-sidenav-container>

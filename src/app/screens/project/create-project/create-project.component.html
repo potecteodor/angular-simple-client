@@ -1,0 +1,28 @@
+<div class="addProjectForm">
+  <br />
+  <div fxLayout="column">
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input matInput type="text" [(ngModel)]="project.name">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Start Date</mat-label>
+      <input matInput [matDatepicker]="picker1" [(ngModel)]="project.start_date">
+      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+      <mat-datepicker #picker1></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>End Date</mat-label>
+      <input matInput [matDatepicker]="picker2" [(ngModel)]="project.end_date">
+      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+      <mat-datepicker #picker2></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Description</mat-label>
+      <input matInput type="text" [(ngModel)]="project.description">
+    </mat-form-field>
+    <button mat-raised-button color="accent" (click)="onAdd()">
+      Create Project
+    </button>
+  </div>
+</div>

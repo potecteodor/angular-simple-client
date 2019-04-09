@@ -1,0 +1,27 @@
+ <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center">
+   Add Collaborator
+   <button mat-icon-button matTooltip="Close" (click)="onClose()">
+     <mat-icon>close</mat-icon>
+   </button>
+ </mat-toolbar>
+ <div class="addColabForm">
+   <br />
+   <form [formGroup]="collaboratorFrom" fxLayout="column">
+
+     <mat-form-field>
+       <mat-label>Email</mat-label>
+       <input matInput formControlName="email" required>
+       <mat-error *ngIf="collaboratorFrom.get('email').hasError('required')">
+         Email is
+         <strong>Required</strong>!
+       </mat-error>
+       <mat-error *ngIf="collaboratorFrom.get('email').hasError('email')">
+         Email is not valid!
+       </mat-error>
+     </mat-form-field>
+
+     <button mat-raised-button color="accent" (click)="onAdd()" [disabled]="collaboratorFrom.invalid">
+       Add
+     </button>
+   </form>
+ </div>

@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import {
   MatButtonModule,
   MatCardModule,
+  MatDatepickerModule,
   MatDialogModule,
   MatFormFieldModule,
   MatGridListModule,
@@ -14,6 +15,7 @@ import {
   MatInputModule,
   MatListModule,
   MatMenuModule,
+  MatNativeDateModule,
   MatPaginatorModule,
   MatProgressBarModule,
   MatRadioModule,
@@ -34,6 +36,8 @@ import {
     // angular
     CommonModule,
     FormsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     ReactiveFormsModule,
     FlexLayoutModule,
     // material
@@ -68,6 +72,8 @@ import {
     FlexLayoutModule,
     // material
     MatSidenavModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
     MatDialogModule,
     MatToolbarModule,
     MatListModule,
