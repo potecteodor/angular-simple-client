@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, EventEmitter, OnInit, Output } from '@angular/core'
 import { IProject } from '../../../core/interfaces/project.interface'
 
 @Component({
@@ -7,6 +7,9 @@ import { IProject } from '../../../core/interfaces/project.interface'
   styleUrls: ['./create-project.component.scss'],
 })
 export class CreateProjectComponent implements OnInit {
+  @Output()
+  eventOutput = new EventEmitter()
+
   project: IProject
 
   constructor() {}
@@ -22,6 +25,10 @@ export class CreateProjectComponent implements OnInit {
       end_date: null,
       description: '',
     }
+  }
+
+  onClose() {
+    this.eventOutput.emit('close')
   }
 
   onAdd() {}

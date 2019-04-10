@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, ViewChild } from '@angular/core'
+import { MatSidenav } from '@angular/material'
 import { CryptService } from '../../core/services/crypt.service'
 import { ProjectService } from './project.service'
 
@@ -8,6 +9,8 @@ import { ProjectService } from './project.service'
   styleUrls: ['./project.component.scss'],
 })
 export class ProjectComponent implements OnInit {
+  @ViewChild('sidenav') sidenav: MatSidenav
+
   projects = []
 
   constructor(private srv: ProjectService) {}
@@ -23,4 +26,10 @@ export class ProjectComponent implements OnInit {
     })
   }
   onCreateProject() {}
+
+  eventListener(ev) {
+    if (ev === 'close') {
+      this.sidenav.close()
+    }
+  }
 }

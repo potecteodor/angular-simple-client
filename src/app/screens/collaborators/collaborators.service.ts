@@ -12,8 +12,19 @@ export class CollaboratorsService {
     const id = CryptService.decrypt(sessionStorage.getItem('userInfo'), true).id
     return this.bHttp.doGet(this.urlPrefix + '/getAll/' + id)
   }
+
+  delete(collab_id): any {
+    const my_id = CryptService.decrypt(sessionStorage.getItem('userInfo'), true).id
+    const data = {
+      my_id: my_id,
+      collab_id: collab_id,
+    }
+    return this.bHttp.doPost(this.urlPrefix + '/delete', { data: data })
+  }
+
   checkEmail(email): any {
-    return this.bHttp.doPost(this.urlPrefix + '/checkEmail', { email: email })
+    const id = CryptService.decrypt(sessionStorage.getItem('userInfo'), true).id
+    return this.bHttp.doPost(this.urlPrefix + '/checkEmail', { my_id: id, email: email })
   }
 
   addCollaborator(collab_id): any {

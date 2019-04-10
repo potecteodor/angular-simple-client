@@ -1,5 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
-import { MatPaginator, MatSidenav, MatSort, MatTableDataSource } from '@angular/material'
+import {
+  MatDialog,
+  MatPaginator,
+  MatSidenav,
+  MatSnackBar,
+  MatSort,
+  MatTableDataSource,
+} from '@angular/material'
+import { CommonPopupComponent } from '../../common-popup/common-popup.component'
 import { CollaboratorsService } from './collaborators.service'
 
 @Component({
@@ -8,7 +16,7 @@ import { CollaboratorsService } from './collaborators.service'
   styleUrls: ['./collaborators.component.scss'],
 })
 export class CollaboratorsComponent implements OnInit {
-  displayedColumns: string[] = ['email', 'display_name']
+  displayedColumns: string[] = ['email', 'display_name', 'actions']
   dataSource: MatTableDataSource<any>
 
   @ViewChild('sidenav') sidenav: MatSidenav
@@ -16,10 +24,49 @@ export class CollaboratorsComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort
 
   collaborators = []
-  constructor(private srv: CollaboratorsService) {}
+  constructor(
+    private srv: CollaboratorsService,
+    public snackBar: MatSnackBar,
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit() {
     this.loadColabs()
+  }
+
+  deleteCollab(row) {
+    const dialogRef = this.dialog.open(CommonPopupComponent, {
+      width: '400px',
+      disableClose: true,
+      data: {
+        title: 'Warning!',
+        message: `Are you sure you want to remove this collaborator?`,
+        buttons: [
+          {
+            type: 'ok',
+            text: 'Yes!',
+          },
+          {
+            type: 'no',
+            text: 'No!',
+          },
+        ],
+      },
+    })
+    dialogRef.afterClosed().subscribe((action: any) => {
+      if (action === 'ok') {
+        this.srv.delete(row.collab_id).subscribe(d => {
+          if (d) {
+            this.loadColabs()
+            this.snackBar.open('Collaborator Removed!', '', {
+              duration: 3000,
+              horizontalPosition: 'right',
+              verticalPosition: 'bottom',
+            })
+          }
+        })
+      }
+    })
   }
 
   loadColabs() {
