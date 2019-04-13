@@ -1,5 +1,5 @@
 <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center">
-  Create Project
+  Edit Project
   <div>
     <button mat-icon-button matTooltip="Close" (click)="onClose()">
       <mat-icon>close</mat-icon>
@@ -29,7 +29,7 @@
     </div>
     <mat-form-field>
       <mat-label>Members</mat-label>
-      <mat-select [(ngModel)]="members" multiple>
+      <mat-select [compareWith]="compareObjects" [(ngModel)]="members" multiple>
         <mat-option *ngFor="let collab of collaborators" [value]="collab.collab_id">
           {{collab.display_name}}({{collab.email}})</mat-option>
       </mat-select>
@@ -38,8 +38,8 @@
       <mat-label>Description</mat-label>
       <textarea matInput type="text" [(ngModel)]="project.description"></textarea>
     </mat-form-field>
-    <button mat-raised-button color="accent" (click)="onAdd()" [disabled]="project.name===''">
-      Create Project
+    <button mat-raised-button color="accent" (click)="onEdit()" [disabled]="project.name===''">
+      Save Modifications
     </button>
   </div>
 </div>

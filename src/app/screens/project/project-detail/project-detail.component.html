@@ -1,0 +1,64 @@
+<mat-toolbar>
+  <button mat-icon-button matTooltip="Back" (click)="goBack()">
+    <mat-icon>keyboard_arrow_left</mat-icon>
+  </button>
+  Project Detail: {{project.name}}
+</mat-toolbar>
+<div fxLayout="row" fxLayoutAlign="space-between start">
+
+  <div fxLayout="column" fxLayoutGap="50px" fxFlex="50" class="cardLayout">
+    <mat-card fxLayout="column" fxLayoutGap="23px">
+      <mat-card-title>Project information</mat-card-title>
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <mat-label class="secondary-text">Project owner: </mat-label>
+        <mat-label>{{projectOwner.display_name}}</mat-label>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <mat-label class="secondary-text">Start Date:</mat-label>
+        <mat-label>{{project.start_date}}</mat-label>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <mat-label class="secondary-text">End Date:</mat-label>
+        <mat-label>{{project.end_date}}</mat-label>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <mat-label class="secondary-text">Description:</mat-label>
+        <mat-label>{{project.description}}</mat-label>
+      </div>
+
+    </mat-card>
+    <mat-card>
+      <mat-card-title>Tasks</mat-card-title>
+      <mat-nav-list>
+        <mat-list-item *ngFor="let task of tasks">
+          {{task.name}}
+        </mat-list-item>
+      </mat-nav-list>
+    </mat-card>
+  </div>
+  <div fxFlex="50" class="cardLayout">
+    <mat-card>
+      <mat-card-title>Members</mat-card-title>
+      <mat-nav-list>
+        <mat-list-item *ngFor="let member of members">
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" fxFlex>
+              {{member.display_name}}({{member.email}})
+            </div>
+            <div>
+              <button mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item>
+                  <mat-icon>remove_red_eye</mat-icon>
+                  <span>View Profile</span>
+                </button>
+              </mat-menu>
+            </div>
+          </div>
+        </mat-list-item>
+      </mat-nav-list>
+    </mat-card>
+  </div>
+</div>

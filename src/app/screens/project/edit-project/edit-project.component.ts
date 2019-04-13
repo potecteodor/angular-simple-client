@@ -1,21 +1,22 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core'
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { MatSnackBar } from '@angular/material'
 import { IProject } from '../../../core/interfaces/project.interface'
 import { CollaboratorsService } from '../../collaborators/collaborators.service'
 import { ProjectService } from '../project.service'
 
 @Component({
-  selector: 'app-create-project',
-  templateUrl: './create-project.component.html',
-  styleUrls: ['./create-project.component.scss'],
+  selector: 'app-edit-project',
+  templateUrl: './edit-project.component.html',
+  styleUrls: ['./edit-project.component.scss'],
 })
-export class CreateProjectComponent implements OnInit {
+export class EditProjectComponent implements OnInit {
   @Output()
   eventOutput = new EventEmitter()
 
-  project: IProject
+  @Input() project: IProject
   members = []
   collaborators = []
+  initialProjectName
 
   constructor(
     private srv: ProjectService,
@@ -24,8 +25,9 @@ export class CreateProjectComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.initProject()
+    this.initialProjectName = this.project.name
     this.getCollaborators()
+    this.getMembers()
   }
 
   getCollaborators() {
@@ -34,28 +36,36 @@ export class CreateProjectComponent implements OnInit {
     })
   }
 
-  initProject() {
-    this.project = {
-      name: '',
-      start_date: null,
-      end_date: null,
-      description: '',
-    }
+  /**
+   * Compare objects for select
+   */
+  compareObjects(o1: any, o2: any): boolean {
+    return o1 && o2 && o1 === o2.id
+  }
+
+  getMembers() {
+    this.srv.getProjectMembers(this.project.id).subscribe(d => {
+      if (d && d.length > 0) {
+        d.map(element => {
+          this.members.push(element.id)
+        })
+      }
+      console.log(this.members)
+    })
   }
 
   onClose() {
     this.eventOutput.emit('close')
   }
 
-  onAdd() {
+  onEdit() {
     this.srv.checkProjectName(this.project.name).subscribe(d => {
-      if (d === true) {
-        this.srv.createProject(this.project, this.members).subscribe(data => {
+      if (d === true || this.project.name === this.initialProjectName) {
+        this.srv.editProject(this.project, this.members).subscribe(data => {
           if (data === true) {
-            this.eventOutput.emit('add')
-            this.initProject()
+            this.eventOutput.emit('edit')
             this.members = []
-            this.snackBar.open('Project created!', '', {
+            this.snackBar.open('Project modified!', '', {
               duration: 3000,
               horizontalPosition: 'right',
               verticalPosition: 'bottom',

@@ -9,8 +9,63 @@
     <mat-sidenav #sidenav disableClose="true" position="end" mode="over" opened="false">
       <app-create-project (eventOutput)="eventListener($event)"></app-create-project>
     </mat-sidenav>
+    <mat-sidenav #editSidenav disableClose="true" position="start" mode="over" opened="false">
+      <app-edit-project *ngIf="selectedProject!==null" [project]="selectedProject"
+        (eventOutput)="eventListener($event)"></app-edit-project>
+    </mat-sidenav>
 
-    <div *ngIf="projects.length<1">
+    <div *ngIf="myProjects.length<1 && otherProjects.length<1">
       No projects! Create one.
     </div>
+
+    <div fxLayout="row" fxLayoutAlign="space-between start" class="projectLists">
+
+      <div *ngIf="myProjects.length>0" fxFlex="50">
+        <h1>My Projects</h1>
+        <mat-nav-list>
+          <mat-list-item *ngFor="let project of myProjects">
+            <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex="60">
+              <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" fxFlex
+                (click)="onProjectClick(project)">
+                <mat-icon>folder</mat-icon>
+                {{project.name}}
+              </div>
+              <div>
+                <button mat-icon-button [matMenuTriggerFor]="menu">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                  <button mat-menu-item (click)="onProjectClick(project)">
+                    <mat-icon>remove_red_eye</mat-icon>
+                    <span>View</span>
+                  </button>
+                  <button mat-menu-item (click)="onEdit(project)">
+                    <mat-icon>edit</mat-icon>
+                    <span>Edit</span>
+                  </button>
+                  <mat-divider></mat-divider>
+                  <button mat-menu-item (click)="onDelete(project)">
+                    <mat-icon>delete</mat-icon>
+                    <span>Remove</span>
+                  </button>
+                </mat-menu>
+              </div>
+            </div>
+          </mat-list-item>
+        </mat-nav-list>
+      </div>
+
+      <div *ngIf="otherProjects.length>0" fxFlex="50">
+        <h1>Other Projects</h1>
+        <mat-nav-list>
+          <mat-list-item *ngFor="let project of otherProjects">
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" (click)="onOtherProjectClick(project)">
+              <mat-icon>folder</mat-icon>
+              {{project.name}}
+            </div>
+          </mat-list-item>
+        </mat-nav-list>
+      </div>
+    </div>
+
   </mat-sidenav-container>
