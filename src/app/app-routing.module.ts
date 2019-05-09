@@ -5,6 +5,7 @@ import { AppLayoutComponent } from './layout/app-layout/app-layout.component'
 import { AuthLayoutComponent } from './layout/auth-layout/auth-layout.component'
 import { AuthModule } from './screens/auth/auth.module'
 import { CollaboratorsModule } from './screens/collaborators/collaborators.module'
+import { CommunicationModule } from './screens/communication/communication.module'
 import { DashboardModule } from './screens/dashboard/dashboard.module'
 import { NotFoundComponent } from './screens/not-found/not-found.component'
 import { ProjectModule } from './screens/project/project.module'
@@ -25,6 +26,11 @@ const routes: Routes = [
         path: 'collaborators',
         canActivate: [AuthGuard],
         loadChildren: () => CollaboratorsModule,
+      },
+      {
+        path: 'communication',
+        canActivate: [AuthGuard],
+        loadChildren: () => CommunicationModule,
       },
       {
         path: 'task',

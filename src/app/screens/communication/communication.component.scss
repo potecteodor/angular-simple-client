@@ -1,0 +1,39 @@
+.chatWriter {
+  height: 100%
+}
+
+.contactList {
+  background-color: rgb(255, 254, 254);
+}
+
+.chatContainer {
+  height: calc(100vh - 193px) !important;
+  padding: 20px;
+}
+
+.writeArea {
+  padding: 10px;
+  background-color: rgb(230, 223, 223);
+}
+
+.noContactSelected {
+  padding: 10px;
+  font-size: 150%;
+  color: rgb(110, 164, 226)
+}
+
+.offline {
+  height: 15px;
+  width: 15px;
+  background-color: gray;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.online {
+  height: 15px;
+  width: 15px;
+  background-color: greenyellow;
+  border-radius: 50%;
+  display: inline-block;
+}

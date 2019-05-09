@@ -1,3 +1,71 @@
-<p>
-  task works!
-</p>
+  <mat-sidenav-container class="taskCreator">
+    <mat-toolbar class="app-color-secondary-900" fxLayout="row" fxLayoutAlign="space-between center">
+      Tasks
+      <button mat-button (click)="sidenav.toggle()">
+        <mat-icon>add</mat-icon>
+        Create Task
+      </button>
+    </mat-toolbar>
+    <mat-sidenav #sidenav disableClose="true" position="end" mode="over" opened="false">
+      <app-create-task (eventOutput)="eventListener($event)"></app-create-task>
+    </mat-sidenav>
+    <!-- <mat-sidenav #editSidenav disableClose="true" position="start" mode="over" opened="false">
+      <app-edit-task *ngIf="selectedProject!==null" [task]="selectedTask" (eventOutput)="eventListener($event)">
+      </app-edit-task>
+    </mat-sidenav> -->
+
+    <div *ngIf="myTasks.length<1 && otherTasks.length<1">
+      No tasks! Create one.
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="space-between start" class="taskLists">
+
+      <!-- <div *ngIf="myProjects.length>0" fxFlex="50">
+        <h1>Tasks</h1>
+        <mat-nav-list>
+          <mat-list-item *ngFor="let project of myProjects">
+            <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex="60">
+              <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" fxFlex
+                (click)="onProjectClick(project)">
+                <mat-icon>folder</mat-icon>
+                {{project.name}}
+              </div>
+              <div>
+                <button mat-icon-button [matMenuTriggerFor]="menu">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                  <button mat-menu-item (click)="onProjectClick(project)">
+                    <mat-icon>remove_red_eye</mat-icon>
+                    <span>View</span>
+                  </button>
+                  <button mat-menu-item (click)="onEdit(project)">
+                    <mat-icon>edit</mat-icon>
+                    <span>Edit</span>
+                  </button>
+                  <mat-divider></mat-divider>
+                  <button mat-menu-item (click)="onDelete(project)">
+                    <mat-icon>delete</mat-icon>
+                    <span>Remove</span>
+                  </button>
+                </mat-menu>
+              </div>
+            </div>
+          </mat-list-item>
+        </mat-nav-list>
+      </div>
+
+      <div *ngIf="otherProjects.length>0" fxFlex="50">
+        <h1>Other Projects</h1>
+        <mat-nav-list>
+          <mat-list-item *ngFor="let project of otherProjects">
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" (click)="onOtherProjectClick(project)">
+              <mat-icon>folder</mat-icon>
+              {{project.name}}
+            </div>
+          </mat-list-item>
+        </mat-nav-list>
+      </div> -->
+    </div>
+
+  </mat-sidenav-container>
