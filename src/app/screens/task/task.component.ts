@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
 import { MatDialog, MatSidenav, MatSnackBar } from '@angular/material'
 import { Router } from '@angular/router'
+import { CommonPopupComponent } from '../../common-popup/common-popup.component'
 import { CryptService } from '../../core/services/crypt.service'
 import { TaskService } from './task.service'
 
@@ -39,22 +40,21 @@ export class TaskComponent implements OnInit {
   }
 
   getTasks() {
-    /* const id = CryptService.decrypt(sessionStorage.getItem('userInfo'), true).id
+    const id = CryptService.decrypt(sessionStorage.getItem('userInfo'), true).id
     this.srv.getMyTasks(id).subscribe(d => {
-      this.myProjects = d
+      this.myTasks = d
     })
-    this.srv.getOtherProjects(id).subscribe(d => {
-      this.otherProjects = d
-    }) */
+    this.srv.getOtherTasks(id).subscribe(d => {
+      this.otherTasks = d
+    })
   }
-  onCreateProject() {}
 
   onEdit(task) {
     this.selectedTask = task
     this.editSidenav.open()
   }
   onDelete(task) {
-    /* const dialogRef = this.dialog.open(CommonPopupComponent, {
+    const dialogRef = this.dialog.open(CommonPopupComponent, {
       width: '400px',
       disableClose: true,
       data: {
@@ -74,10 +74,10 @@ export class TaskComponent implements OnInit {
     })
     dialogRef.afterClosed().subscribe((action: any) => {
       if (action === 'ok') {
-        this.srv.deleteProject(task.id).subscribe(d => {
+        this.srv.deleteTask(task.id).subscribe(d => {
           if (d) {
-            this.getProjects()
-            this.snackBar.open('Collaborator Removed!', '', {
+            this.getTasks()
+            this.snackBar.open('Task Removed!', '', {
               duration: 3000,
               horizontalPosition: 'right',
               verticalPosition: 'bottom',
@@ -87,21 +87,20 @@ export class TaskComponent implements OnInit {
       }
     })
   }
-*/
-  }
+
   eventListener(ev) {
     if (ev === 'close') {
       this.sidenav.close()
-      // this.editSidenav.close()
-    }
-    /* if (ev === 'add') {
-      this.sidenav.close()
-      this.getProjects()
-    } */
-    /*  if (ev === 'edit') {
       this.editSidenav.close()
-      this.selectedProject = null
-      this.getProjects()
-    } */
+    }
+    if (ev === 'add') {
+      this.sidenav.close()
+      this.getTasks()
+    }
+    if (ev === 'edit') {
+      this.editSidenav.close()
+      this.selectedTask = null
+      this.getTasks()
+    }
   }
 }

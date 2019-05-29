@@ -78,7 +78,7 @@ export class ProjectComponent implements OnInit {
         this.srv.deleteProject(project.id).subscribe(d => {
           if (d) {
             this.getProjects()
-            this.snackBar.open('Collaborator Removed!', '', {
+            this.snackBar.open('Project Removed!', '', {
               duration: 3000,
               horizontalPosition: 'right',
               verticalPosition: 'bottom',

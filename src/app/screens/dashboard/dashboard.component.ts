@@ -1,7 +1,10 @@
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, OnInit } from '@angular/core';
-import { map } from 'rxjs/operators';
-import { DashboardService } from './dashboard.service';
+import { Component, OnInit } from '@angular/core'
+import { Router } from '@angular/router'
+import { CryptService } from '../../core/services/crypt.service'
+import { CollaboratorsService } from '../collaborators/collaborators.service'
+import { ProjectService } from '../project/project.service'
+import { TaskService } from '../task/task.service'
+import { DashboardService } from './dashboard.service'
 
 @Component({
   selector: 'app-dashboard',
@@ -9,28 +12,54 @@ import { DashboardService } from './dashboard.service';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
-  /** Based on the screen size, switch from standard to one column per row */
-  cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
-    map(({ matches }) => {
-
-      return [
-        { title: 'Card 1', cols: 1, rows: 1 },
-        { title: 'Card 2', cols: 1, rows: 2 },
-        { title: 'Card 3', cols: 1, rows: 1 },
-      ]
-    })
-  )
-
+  projects = []
+  collabs = []
+  tasks = []
   constructor(
-    private breakpointObserver: BreakpointObserver,
-    private srv: DashboardService
-  ) { }
+    private srv: DashboardService,
+    private router: Router,
+    private collabSrv: CollaboratorsService,
+    private taskSrv: TaskService,
+    private projectSrv: ProjectService
+  ) {}
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.getProjects()
+    this.getCollaborators()
+    this.getTasks()
+  }
 
-  doGet() {
-    this.srv.getAll().subscribe(d => {
-      console.log(d)
+  goTo(url) {
+    this.router.navigate([url])
+  }
+
+  getProjects() {
+    const id = CryptService.decrypt(sessionStorage.getItem('userInfo'), true).id
+    this.projectSrv.getMyProjects(id).subscribe(d => {
+      d.map((el, index) => {
+        if (index < 4) {
+          this.projects.push(el)
+        }
+      })
+    })
+  }
+  getCollaborators() {
+    this.collabSrv.getAll().subscribe(d => {
+      d.map((el, index) => {
+        if (index < 4) {
+          this.collabs.push(el)
+        }
+      })
+    })
+  }
+  getTasks() {
+    const id = CryptService.decrypt(sessionStorage.getItem('userInfo'), true).id
+    this.taskSrv.getMyTasks(id).subscribe(d => {
+      d.map((el, index) => {
+        if (index < 4) {
+          this.tasks.push(el)
+        }
+      })
     })
   }
 }

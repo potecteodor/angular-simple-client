@@ -32,6 +32,10 @@ export class ProjectService {
     })
   }
 
+  getTasks(project_id) {
+    return this.bHttp.doGet(this.urlPrefix + '/getProjectTasks/' + project_id)
+  }
+
   getProjectMembers(project_id) {
     return this.bHttp.doGet(this.urlPrefix + '/getProjectMembers/' + project_id)
   }

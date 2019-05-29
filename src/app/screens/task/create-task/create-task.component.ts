@@ -1,6 +1,8 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core'
 import { MatSnackBar } from '@angular/material'
 import { ITask } from '../../../core/interfaces/task.interface'
+import { CryptService } from '../../../core/services/crypt.service'
+import { ProjectService } from '../../project/project.service'
 import { TaskService } from '../task.service'
 
 @Component({
@@ -18,26 +20,36 @@ export class CreateTaskComponent implements OnInit {
   task: ITask
   members = []
   collaborators = []
+  projects = []
 
   constructor(
     private srv: TaskService,
-    // private srvCollab: CollaboratorsService,
+    private pSrv: ProjectService,
     private snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
+    this.getProjects()
     this.initProject()
-    this.getCollaborators()
   }
 
-  getCollaborators() {
-    /* this.srvCollab.getAll().subscribe(d => {
+  projectSelect(ev) {
+    this.pSrv.getProjectMembers(ev.value).subscribe(d => {
       this.collaborators = d
-    }) */
+      this.members = []
+    })
+  }
+
+  getProjects() {
+    const id = CryptService.decrypt(sessionStorage.getItem('userInfo'), true).id
+    this.pSrv.getMyProjects(id).subscribe(d => {
+      this.projects = d
+    })
   }
 
   initProject() {
     this.task = {
+      project_id: null,
       subject: '',
       priority: '',
       status: '',
@@ -52,15 +64,14 @@ export class CreateTaskComponent implements OnInit {
   }
 
   onAdd() {
-    console.log(this.task)
-    /*  this.srv.checkProjectName(this.project.name).subscribe(d => {
+    this.srv.checkTaskName(this.task.subject).subscribe(d => {
       if (d === true) {
-        this.srv.createProject(this.project, this.members).subscribe(data => {
+        this.srv.createTask(this.task, this.members).subscribe(data => {
           if (data === true) {
             this.eventOutput.emit('add')
             this.initProject()
             this.members = []
-            this.snackBar.open('Project created!', '', {
+            this.snackBar.open('Task created!', '', {
               duration: 3000,
               horizontalPosition: 'right',
               verticalPosition: 'bottom',
@@ -68,12 +79,12 @@ export class CreateTaskComponent implements OnInit {
           }
         })
       } else {
-        this.snackBar.open('You already have a project with this name!', '', {
+        this.snackBar.open('You already have a task with this subject!', '', {
           duration: 3000,
           horizontalPosition: 'center',
           verticalPosition: 'top',
         })
       }
-    }) */
+    })
   }
 }

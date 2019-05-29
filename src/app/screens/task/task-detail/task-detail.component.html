@@ -1,3 +1,64 @@
-<p>
-  task-detail works!
-</p>
+<mat-toolbar>
+  <button mat-icon-button matTooltip="Back" (click)="goBack()">
+    <mat-icon>keyboard_arrow_left</mat-icon>
+  </button>
+  Task Detail: {{task.subject}}
+</mat-toolbar>
+<div fxLayout="row" fxLayoutAlign="space-between start">
+
+  <div fxLayout="column" fxLayoutGap="50px" fxFlex="50" class="cardLayout">
+    <mat-card fxLayout="column" fxLayoutGap="23px">
+      <mat-card-title>Task information</mat-card-title>
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <mat-label class="secondary-text">Project:</mat-label>
+        <mat-label>{{project.name}}</mat-label>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <mat-label class="secondary-text">Start Date:</mat-label>
+        <mat-label>{{task.start_date| date:'medium'}}</mat-label>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <mat-label class="secondary-text">End Date:</mat-label>
+        <mat-label>{{task.end_date| date:'medium'}}</mat-label>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <mat-label class="secondary-text">Description:</mat-label>
+        <mat-label>{{task.description}}</mat-label>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <mat-label class="secondary-text">Priority:</mat-label>
+        <mat-label>{{task.priority}}</mat-label>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <mat-label class="secondary-text">Status:</mat-label>
+        <mat-label>{{task.status}}</mat-label>
+      </div>
+
+    </mat-card>
+  </div>
+  <div fxFlex="50" class="cardLayout">
+    <mat-card>
+      <mat-card-title>Members</mat-card-title>
+      <mat-nav-list>
+        <mat-list-item *ngFor="let member of members">
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" fxFlex>
+              {{member.display_name}}({{member.email}})
+            </div>
+            <div>
+              <button mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item>
+                  <mat-icon>remove_red_eye</mat-icon>
+                  <span>View Profile</span>
+                </button>
+              </mat-menu>
+            </div>
+          </div>
+        </mat-list-item>
+      </mat-nav-list>
+    </mat-card>
+  </div>
+</div>

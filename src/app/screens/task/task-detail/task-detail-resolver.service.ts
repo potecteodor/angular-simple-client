@@ -3,18 +3,17 @@ import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/r
 import { Observable } from 'rxjs'
 import { BaseHttpService } from '../../../core/services/base-http.service'
 import { CryptService } from '../../../core/services/crypt.service'
-import { ProjectService } from '../project.service'
+import { TaskService } from '../task.service'
 
 @Injectable()
-export class ProjectDetailResolverService implements Resolve<any> {
+export class TaskDetailResolverService implements Resolve<any> {
   routeData = {
+    task: {},
     project: {},
-    projectOwner: '',
     members: [],
-    tasks: [{ name: 'task 1' }],
   }
 
-  constructor(private bHttp: BaseHttpService<any>, private srv: ProjectService) {}
+  constructor(private bHttp: BaseHttpService<any>, private srv: TaskService) {}
 
   resolve(
     route: ActivatedRouteSnapshot,
@@ -23,16 +22,14 @@ export class ProjectDetailResolverService implements Resolve<any> {
     return new Promise((resolve, reject) => {
       if (route.params.id) {
         const id = JSON.parse(CryptService.decrypt(route.params.id, false)).id
-        this.srv.getOneProject(id).subscribe(project => {
-          this.routeData['project'] = project[0]
-          this.srv.getProjectOwner(id).subscribe(owner => {
-            this.routeData['projectOwner'] = owner[0]
-            this.srv.getProjectMembers(id).subscribe(membs => {
+        this.srv.getOneTask(id).subscribe(task => {
+          this.routeData['task'] = task[0]
+          this.srv.getProject(id).subscribe(project => {
+            this.routeData['project'] = project[0]
+            this.srv.getTaskMembers(id).subscribe(membs => {
               this.routeData['members'] = membs
-              this.srv.getTasks(id).subscribe(tasks => {
-                this.routeData['tasks'] = tasks
-                resolve(this.routeData)
-              })
+              console.log(this.routeData)
+              resolve(this.routeData)
             })
           })
         })
