@@ -3,6 +3,8 @@ import { RouterModule } from '@angular/router'
 import { CommonPopupComponent } from '../../common-popup/common-popup.component'
 import { CommonPopupModule } from '../../common-popup/common-popup.module'
 import { AppSharedModule } from '../../modules/app-shared.module'
+import { ProfilePopupComponent } from '../../profile-popup/profile-popup.component'
+import { ProfilePopupModule } from '../../profile-popup/profile-popup.module'
 import { CollaboratorsService } from '../collaborators/collaborators.service'
 import { CreateProjectComponent } from './create-project/create-project.component'
 import { EditProjectComponent } from './edit-project/edit-project.component'
@@ -21,6 +23,7 @@ import { ProjectService } from './project.service'
   imports: [
     AppSharedModule,
     CommonPopupModule,
+    ProfilePopupModule,
     RouterModule.forChild([
       {
         path: '',
@@ -35,7 +38,7 @@ import { ProjectService } from './project.service'
       },
     ]),
   ],
-  entryComponents: [CommonPopupComponent],
+  entryComponents: [CommonPopupComponent, ProfilePopupComponent],
   providers: [ProjectService, CollaboratorsService, ProjectDetailResolverService],
 })
 export class ProjectModule {}

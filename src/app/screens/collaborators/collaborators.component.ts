@@ -16,7 +16,7 @@ import { CollaboratorsService } from './collaborators.service'
   styleUrls: ['./collaborators.component.scss'],
 })
 export class CollaboratorsComponent implements OnInit {
-  displayedColumns: string[] = ['email', 'display_name', 'actions']
+  displayedColumns: string[] = ['email', 'display_name', 'phone', 'actions']
   dataSource: MatTableDataSource<any>
 
   @ViewChild('sidenav') sidenav: MatSidenav

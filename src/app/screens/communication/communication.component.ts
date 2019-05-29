@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core'
+import { MatDialog } from '@angular/material'
 import { CryptService } from '../../core/services/crypt.service'
+import { UserService } from '../../core/services/user.service'
+import { ProfilePopupComponent } from '../../profile-popup/profile-popup.component'
 import { CommunicationService } from './communication.service'
 
 @Component({
@@ -11,13 +14,22 @@ export class CommunicationComponent implements OnInit {
   collaborators = []
   onlineColabs = []
   writeText
-  selectedContact = { collab_id: -1, id: -1, display_name: '' }
+  selectedContact = { id: -1, display_name: '', avatar: null }
   messages = {}
   myUser
 
-  constructor(private srv: CommunicationService) {
-    this.myUser = CryptService.decrypt(sessionStorage.getItem('userInfo'), true)
-    this.srv.getCollaborators().subscribe(colabs => {
+  constructor(
+    private srv: CommunicationService,
+    private userSrv: UserService,
+    public dialog: MatDialog
+  ) {
+    const data = CryptService.decrypt(sessionStorage.getItem('userInfo'), true)
+    this.myUser = {
+      id: data.id,
+      display_name: data.display_name,
+      avatar: data.avatar,
+    }
+    this.srv.getCollaborator().subscribe(colabs => {
       this.collaborators = colabs
     })
   }
@@ -34,12 +46,22 @@ export class CommunicationComponent implements OnInit {
     this.srv.socket.on('messageReceived', data => {
       console.log('Received message from Websocket Server', data)
 
-      if (!this.messages[data.from.id]) {
-        this.messages[data.from.id] = []
+      if (!this.messages[data.from_who.id]) {
+        this.messages[data.from_who.id] = []
       }
-      if (data.to) {
-        this.messages[data.from.id].push(data)
+      if (data.to_who) {
+        this.messages[data.from_who.id].push(data)
       }
+    })
+  }
+
+  openProfile(item) {
+    this.userSrv.getOne(item.id).subscribe(d => {
+      this.dialog.open(ProfilePopupComponent, {
+        width: '400px',
+        disableClose: true,
+        data: d[0],
+      })
     })
   }
 
@@ -50,37 +72,37 @@ export class CommunicationComponent implements OnInit {
   }
 
   sendMessage() {
-    const onlineCollab = this.onlineColabs[this.selectedContact.collab_id]
-    /* if (
-      (onlineContact && onlineContact.uid && onlineContact.uid > 0) ||
-      this.selectedContact.id === -1
-    ) { */
+    const onlineCollab = this.onlineColabs[this.selectedContact.id]
     this.srv.sendMessageToServer(this.writeText, onlineCollab, this.myUser)
-    /*     } */
-    if (this.selectedContact.collab_id) {
-      this.messages[this.selectedContact.collab_id].push({
-        from: this.myUser,
+    const data = {
+      message: this.writeText,
+      to_who: this.selectedContact,
+      from_who: this.myUser,
+    }
+    this.srv.saveMessage(data).subscribe(d => {})
+    if (this.selectedContact.id) {
+      this.messages[this.selectedContact.id].push({
+        from_who: this.myUser,
         message: this.writeText,
       })
     }
-    console.log(this.messages[this.selectedContact.collab_id])
     this.writeText = ''
   }
 
   onContactClick(ev) {
     this.selectedContact = ev
+    console.log(this.selectedContact)
     const data = {
-      to: this.selectedContact,
-      from: this.myUser,
+      to_who: this.selectedContact,
+      from_who: this.myUser,
     }
-    if (!this.messages[this.selectedContact.collab_id]) {
-      this.messages[this.selectedContact.collab_id] = []
-    }
-    /* this.srv.getMessages(data).subscribe(d => {
+    if (!this.messages[this.selectedContact.id]) {
       this.messages[this.selectedContact.id] = []
-      d.forEach(element => {
-        this.messages[this.selectedContact.id].push(element)
-      })
-    }) */
+    }
+    this.srv.getMessage(data).subscribe(d => {
+      if (d && d.length > 0) {
+        this.messages[this.selectedContact.id] = d
+      }
+    })
   }
 }

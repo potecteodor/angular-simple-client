@@ -19,11 +19,23 @@ export class CommunicationService {
     return this.bHttp.doGet('/collaborator/getAll/' + id)
   }
 
+  getCollaborator() {
+    const id = CryptService.decrypt(sessionStorage.getItem('userInfo'), true).id
+    return this.bHttp.doGet('/collaborator/getAllCollabs/' + id)
+  }
+
+  saveMessage(data) {
+    return this.bHttp.doPost('/chat/saveMessage/', data)
+  }
+  getMessage(data) {
+    return this.bHttp.doPost('/chat/getMessage/', data)
+  }
+
   sendMessageToServer(msg, to, from): any {
     this.socket.emit('sendMessage', {
       message: msg,
-      to: to,
-      from: from,
+      to_who: to,
+      from_who: from,
     })
   }
 }

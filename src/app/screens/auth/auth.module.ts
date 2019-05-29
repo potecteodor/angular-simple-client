@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core'
 import { RouterModule } from '@angular/router'
+import { NgxMaskModule } from 'ngx-mask'
 import { CommonPopupComponent } from '../../common-popup/common-popup.component'
 import { CommonPopupModule } from '../../common-popup/common-popup.module'
 import { AppSharedModule } from '../../modules/app-shared.module'
@@ -24,6 +25,7 @@ import { ResetPasswordService } from './reset-password/reset-password.service'
   imports: [
     AppSharedModule,
     CommonPopupModule,
+    NgxMaskModule.forRoot(),
     RouterModule.forChild([
       {
         path: '',

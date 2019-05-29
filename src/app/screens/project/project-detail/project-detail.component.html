@@ -50,7 +50,7 @@
                 <mat-icon>more_vert</mat-icon>
               </button>
               <mat-menu #menu="matMenu">
-                <button mat-menu-item>
+                <button mat-menu-item (click)="openProfile(member)">
                   <mat-icon>remove_red_eye</mat-icon>
                   <span>View Profile</span>
                 </button>

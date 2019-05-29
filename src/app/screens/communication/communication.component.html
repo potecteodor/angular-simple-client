@@ -14,7 +14,7 @@
           <mat-list-item *ngFor="let item of collaborators">
             <div fxLayout="row" fxLayoutAlign="space-between center" fxFill>
               <div (click)="onContactClick(item)" fxLayout="row" fxLayoutAlign="center center">
-                <span [ngClass]="onlineColabs[item.collab_id] ? 'online' : 'offline'"></span>
+                <span [ngClass]="onlineColabs[item.id] ? 'online' : 'offline'"></span>
                 <!--  <img class="avatar mr-0 mr-sm-16" src="assets/images/avatars/Velazquez.jpg"> -->
                 <span>{{item.display_name}}</span>
               </div>
@@ -23,7 +23,7 @@
                   <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">
-                  <button mat-menu-item>
+                  <button mat-menu-item (click)="openProfile(item)">
                     <mat-icon>people</mat-icon>
                     <span>Profile</span>
                   </button>
@@ -42,20 +42,20 @@
         </mat-toolbar>
 
         <div class="chatWriter">
-          <div *ngIf="selectedContact.collab_id===-1">
+          <div *ngIf="selectedContact.id===-1">
             <span class="noContactSelected">No contact selected! Please select one to start a conversation.</span>
           </div>
-          <mat-nav-list class="custom-navy-50" *ngIf="selectedContact.collab_id!==-1">
-            <mat-list-item *ngFor="let item of messages[selectedContact.collab_id]">
-              <div fxLayout="row" fxLayoutAlign="space-between center" fxFill *ngIf="item.from.id!==myUser.id">
+          <mat-nav-list class="custom-navy-50" *ngIf="selectedContact.id!==-1">
+            <mat-list-item *ngFor="let item of messages[selectedContact.id]">
+              <div fxLayout="row" fxLayoutAlign="space-between center" fxFill *ngIf="item.from_who.id!==myUser.id">
                 <div fxLayout="row" fxLayoutAlign="center center">
                   <!-- <img class="avatar mr-0 mr-sm-16" src="assets/images/avatars/Velazquez.jpg"> -->
-                  {{item.from.displayName}}
+                  {{item.from_who.displayName}}
                   <span>{{item.message}}</span>
                 </div>
                 <div></div>
               </div>
-              <div fxLayout="row" fxLayoutAlign="space-between center" fxFill *ngIf="item.from.id===myUser.id">
+              <div fxLayout="row" fxLayoutAlign="space-between center" fxFill *ngIf="item.from_who.id===myUser.id">
                 <div></div>
                 <div fxLayout="row" fxLayoutAlign="center center">
                   <!-- <img class="avatar mr-0 mr-sm-16" src="assets/images/avatars/Velazquez.jpg"> -->
@@ -67,8 +67,7 @@
         </div>
 
         <!--------------Writing Box------------------->
-        <mat-form-field appearance="outline" class="writeArea" floatLabel="never"
-          *ngIf="selectedContact.collab_id!==-1">
+        <mat-form-field appearance="outline" class="writeArea" floatLabel="never" *ngIf="selectedContact.id!==-1">
           <textarea (keydown)="onKeydown($event)" matInput placeholder="Type and hit enter to send message"
             [(ngModel)]="writeText"></textarea>
           <button matSuffix mat-icon-button [matTooltip]="'Send'" (click)="sendMessage()">
