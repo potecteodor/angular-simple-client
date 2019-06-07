@@ -43,6 +43,7 @@
         <mat-list-item *ngFor="let member of members">
           <div fxLayout="row" fxLayoutAlign="space-between center">
             <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" fxFlex>
+              <img class="avatarImg" [src]="member.avatar || 'assets/images/default-profile.png'" />
               {{member.display_name}}({{member.email}})
             </div>
             <div>

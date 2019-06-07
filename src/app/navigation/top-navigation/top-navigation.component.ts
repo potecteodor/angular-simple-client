@@ -5,6 +5,8 @@ import { Router } from '@angular/router'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { CryptService } from '../../core/services/crypt.service'
+import { UserService } from '../../core/services/user.service'
+import { MyProfileComponent } from '../../my-profile/my-profile.component'
 import { ChangePassComponent } from '../../screens/auth/change-pass/change-pass.component'
 
 @Component({
@@ -26,11 +28,27 @@ export class TopNavigationComponent implements OnInit {
     private breakpointObserver: BreakpointObserver,
     public router: Router,
     public dialog: MatDialog,
-    public snackBar: MatSnackBar
+    public snackBar: MatSnackBar,
+    public userSrv: UserService
   ) {}
 
   ngOnInit() {
     this.setData()
+  }
+
+  onProfile() {
+    this.userSrv.getOne(this.user.id).subscribe(d => {
+      const dialogRef = this.dialog.open(MyProfileComponent, {
+        width: 'auto',
+        disableClose: true,
+        data: d[0],
+      })
+      dialogRef.afterClosed().subscribe(d => {
+        this.user = d
+        sessionStorage.setItem('userInfo', CryptService.crypt(d))
+        // this.user = CryptService.decrypt(sessionStorage.getItem('userInfo'), true)
+      })
+    })
   }
 
   setData() {

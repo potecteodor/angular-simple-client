@@ -1,0 +1,8 @@
+
+
+ T - auth one box with gradient background
+ F - topnav + left nav
+ ? - dashboard ?
+ F - click on char user to work on list item not on user name
+ F - Design: overall
+ F - fix too many connection errors.

@@ -6,6 +6,7 @@
 
 html,
 body {
+  font-family: 'Roboto', sans-serif;
   margin: 0;
   padding: 0;
   width: 100%;
@@ -14,4 +15,20 @@ body {
 
 .list-row {
   line-height: 48px;
+}
+
+.avatar {
+  vertical-align: middle;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: white;
+}
+
+.avatarImg {
+  vertical-align: middle;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: white
 }

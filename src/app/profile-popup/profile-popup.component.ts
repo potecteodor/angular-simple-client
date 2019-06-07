@@ -7,6 +7,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
   styleUrls: ['./profile-popup.component.scss'],
 })
 export class ProfilePopupComponent implements OnInit {
+  imageSrc = 'assets/images/default-profile.png'
+
   userProfile = {
     display_name: '',
     avatar: '',

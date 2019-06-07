@@ -1,0 +1,25 @@
+<div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="12px">
+  <img class="avatar" [src]="userProfile.avatar || imageSrc" />
+  <h1>{{userProfile.display_name}}</h1>
+</div>
+
+<div mat-dialog-content fxLayout="column">
+  <input id="singleFile" type="file" name="change picture" [fileUploadInputFor]="fileUploadQueue" />
+  <div style="width: 500px">
+    <mat-file-upload-queue #fileUploadQueue [fileAlias]="'file'" [httpUrl]="serverUrl"
+      [httpRequestParams]="{user:userProfile.id}" multiple>
+      <mat-file-upload (onUpload)="afterUpload($event)" [file]="file" [id]="i"
+        *ngFor="let file of fileUploadQueue.files; let i = index">
+      </mat-file-upload>
+    </mat-file-upload-queue>
+  </div>
+
+  <!-- <input type="file" (change)="fileOpen($event)"> -->
+  <span>Email: {{userProfile.email}}</span>
+  <br />
+  <span>Phone: {{userProfile.phone | mask:'(0000) 000-0000'}}</span>
+</div>
+<div mat-dialog-actions align="end">
+  <!-- <button mat-button (click)="onSave()">Save</button> -->
+  <button mat-button (click)="onBtnClick('close')" cdkFocusInitial>close</button>
+</div>

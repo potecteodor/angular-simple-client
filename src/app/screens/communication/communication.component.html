@@ -7,15 +7,16 @@
     <div class="mat-elevation-z8" fxFill>
       <!-- Contact List -->
       <div class="contactList mat-elevation-z8" fxLayout="column" fxFlex="30" fxFill>
-        <mat-toolbar class="app-color-secondary-400">
+        <mat-toolbar>
           Collaborators
         </mat-toolbar>
         <mat-nav-list>
-          <mat-list-item *ngFor="let item of collaborators">
+          <mat-list-item [ngClass]="{'app-color-primary': selectedContact.id === item.id}"
+            *ngFor="let item of collaborators">
             <div fxLayout="row" fxLayoutAlign="space-between center" fxFill>
               <div (click)="onContactClick(item)" fxLayout="row" fxLayoutAlign="center center">
                 <span [ngClass]="onlineColabs[item.id] ? 'online' : 'offline'"></span>
-                <!--  <img class="avatar mr-0 mr-sm-16" src="assets/images/avatars/Velazquez.jpg"> -->
+                <img class="avatarImg" [src]="item.avatar || 'assets/images/default-profile.png'" />
                 <span>{{item.display_name}}</span>
               </div>
               <div>
@@ -37,8 +38,12 @@
 
       <!-- Chat Writer -->
       <div class="chatWriter" fxLayout="column" fxFlex fxFill>
-        <mat-toolbar class="app-color-secondary-100">
-          {{selectedContact.display_name}}
+        <mat-toolbar class="app-color-primary-700">
+          <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
+            <img *ngIf="selectedContact.id!==-1" class="avatarImg"
+              [src]="selectedContact.avatar || 'assets/images/default-profile.png'" />
+            {{selectedContact.display_name}}
+          </div>
         </mat-toolbar>
 
         <div class="chatWriter">

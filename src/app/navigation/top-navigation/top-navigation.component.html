@@ -1,4 +1,4 @@
-<mat-toolbar color="primary">
+<mat-toolbar class="app-color-primary-800">
   <div fxLayout="row" fxFlex fxLayoutAlign="space-between center">
     <div>
       <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="sideNav.toggle()">
@@ -7,8 +7,19 @@
       <span>Task Manager</span>
     </div>
     <div>
-      <button mat-button [matMenuTriggerFor]="menu">{{user.display_name}}</button>
+      <button mat-button [matMenuTriggerFor]="menu">
+        <div fxFlex fxLayout="row" fxLayoutGap="12px" fxLayoutAlign="space-between center">
+          <!--  <img class="avatar" src="http://localhost:40402/src/static/public/deafault-avatar.jpg" /> -->
+          <img class="avatar" [src]="user.avatar || 'assets/images/default-profile.png'" />
+          <span class="username mr-12">{{ user.display_name }}</span>
+        </div>
+      </button>
+
+      <!-- <button mat-button [matMenuTriggerFor]="menu">{{user.display_name}}</button> -->
       <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="onProfile()">
+          <mat-icon>people</mat-icon>Profile
+        </button>
         <button mat-menu-item (click)="changePass()">
           <mat-icon>settings</mat-icon>Change Password
         </button>
@@ -20,6 +31,5 @@
         <mat-icon>power_off</mat-icon>Logout
       </button> -->
     </div>
-
   </div>
 </mat-toolbar>

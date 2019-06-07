@@ -15,11 +15,11 @@
       </div>
       <div fxLayout="row" fxLayoutAlign="start center">
         <mat-label class="secondary-text">Start Date:</mat-label>
-        <mat-label>{{task.start_date| date:'medium'}}</mat-label>
+        <mat-label *ngIf="task.start_date!==null">{{task.start_date| date:'medium'}}</mat-label>
       </div>
       <div fxLayout="row" fxLayoutAlign="start center">
         <mat-label class="secondary-text">End Date:</mat-label>
-        <mat-label>{{task.end_date| date:'medium'}}</mat-label>
+        <mat-label *ngIf="task.end_date!==null">{{task.end_date| date:'medium'}}</mat-label>
       </div>
       <div fxLayout="row" fxLayoutAlign="start center">
         <mat-label class="secondary-text">Description:</mat-label>
@@ -43,6 +43,7 @@
         <mat-list-item *ngFor="let member of members">
           <div fxLayout="row" fxLayoutAlign="space-between center">
             <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" fxFlex>
+              <img class="avatarImg" [src]="member.avatar || 'assets/images/default-profile.png'" />
               {{member.display_name}}({{member.email}})
             </div>
             <div>
