@@ -1,10 +1,5 @@
 <div class="authLayout" fxLayout="row">
-  <div class="leftPanel" fxFlex="50">
-    <div class="authContent" style="padding: 28px;">
-      <router-outlet *ngIf="true"></router-outlet>
-    </div>
-  </div>
-  <div fxFlex="50" class="rightPanel">
-    <span class="rightPanelText"><img src="assets/logos/logo.png" /></span>
+  <div class="formPanel">
+    <router-outlet *ngIf="true"></router-outlet>
   </div>
 </div>

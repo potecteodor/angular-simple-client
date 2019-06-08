@@ -1,3 +1,25 @@
 .loginForm {
-  padding: 28px;
+  padding: 20px;
+}
+
+.logoForm {
+  padding-bottom: 20px;
+  -webkit-box-shadow: 3px 0px 7px -1px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 3px 0px 7px -1px rgba(0, 0, 0, 0.75);
+  box-shadow: 3px 0px 7px -1px rgba(0, 0, 0, 0.75);
+}
+
+.loginScreen {
+  width: 1000px;
+  height: 450px;
+}
+
+.logoClass {
+  margin: auto;
+  width: 300px;
+  height: 300px;
+}
+
+mat-card {
+  padding: 0 !important;
 }

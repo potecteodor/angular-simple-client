@@ -4,33 +4,22 @@ app-auth-layout {
 
   .authLayout {
     height: 100%;
+    background-image: linear-gradient(to left top,
+        #1f515f,
+        #366b7b,
+        #4e8698,
+        #65a3b6,
+        #7ec0d5,
+        #87ccdf,
+        #90d8e9,
+        #99e4f3,
+        #96e0e9,
+        #94dce0,
+        #93d7d6,
+        #93d3cd);
   }
 }
 
-.rightPanelText {
-  font-size: 500%;
-  font-weight: bold;
-  color: orangered;
-  margin-top: 500px;
-}
-
-.rightPanel {
-  background-image: linear-gradient(to left top, #1f515f, #366b7b, #4e8698, #65a3b6, #7ec0d5, #87ccdf, #90d8e9, #99e4f3, #96e0e9, #94dce0, #93d7d6, #93d3cd);
-  height: 100%;
-  text-align: center;
-  vertical-align: middle;
-  line-height: calc(100vh - 126px);
-}
-
-.leftPanel {
-  background-color: white;
-  height: 100%;
-}
-
-.authContent {
-  margin: 0;
-  position: relative;
-  top: 40%;
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
+.formPanel {
+  margin: auto;
 }
