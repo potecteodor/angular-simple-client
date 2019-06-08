@@ -50,23 +50,12 @@ export class RegisterComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.registerForm = this.fb.group(
-      {
-        email: ['', [Validators.required, Validators.email]],
-        display_name: ['', [Validators.required]],
-        phone: [''],
-        password: ['', [Validators.required]],
-        repeat_password: [''],
-      },
-      { validator: this.checkPasswords }
-    )
-  }
-
-  checkPasswords(group: FormGroup) {
-    const pass = group.controls.password.value
-    const confirmPass = group.controls.repeat_password.value
-
-    return pass === confirmPass ? null : { notSame: true }
+    this.registerForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      display_name: ['', [Validators.required]],
+      phone: [''],
+      password: ['', [Validators.required]],
+    })
   }
 
   onRegister() {

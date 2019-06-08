@@ -1,61 +1,72 @@
-<mat-card class="registerForm">
-  <mat-card-title>Register</mat-card-title>
-  <form [formGroup]="registerForm" fxLayout="column">
+<mat-card class="loginScreen">
+  <div fxFill fxLayout="row">
 
-    <mat-form-field hintLabel="Your personal email address.">
-      <mat-label>Email</mat-label>
-      <input matInput formControlName="email" maxlength="30" required>
-      <mat-error *ngIf="registerForm.get('email').hasError('required')">
-        Email is
-        <strong>Required</strong>!
-      </mat-error>
-      <mat-error *ngIf="registerForm.get('email').hasError('email')">
-        Email is not valid!
-      </mat-error>
-    </mat-form-field>
+    <!-------------------------- Left side ------------------>
+    <div class="logoForm" fxLayout="column" fxFlex="35" fxLayoutAlign="space-between center">
+      <div>
+        <img class="logoClass" src="assets/logos/app_logo.png" />
+      </div>
+      <div fxLayout="column" fxLayoutAlign="start center">
+        <a style="color:#1f515f;" [routerLink]="'/auth'"><strong>Already have an
+            account?Login</strong></a>
+        <a style="color:#1f515f;" [routerLink]="'/auth/forgot-password'"><strong>Forgot
+            Password?</strong></a>
+      </div>
+    </div>
 
-    <mat-form-field>
-      <mat-label>Display Name</mat-label>
-      <input matInput formControlName="display_name" required>
-      <mat-error *ngIf="registerForm.hasError('required', 'display_name')">
-        Display name required!
-      </mat-error>
-    </mat-form-field>
+    <!-------------------------- Right side ------------------>
+    <form class="loginForm mat-elevation-z4" fxFlex="65" [formGroup]="registerForm" fxLayout="column"
+      fxLayoutAlign="space-between center">
+      <br />
+      <mat-card-title style="font-size: 300%;">Register</mat-card-title>
+      <div fxLayout="column" style="width:350px">
 
-    <mat-form-field>
-      <mat-label>Phone number</mat-label>
-      <input matInput type="text" mask="(0000) 000-0000" formControlName="phone">
-    </mat-form-field>
+        <mat-form-field hintLabel="Your personal email address.">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" maxlength="30" required>
+          <mat-error *ngIf="registerForm.get('email').hasError('required')">
+            Email is
+            <strong>Required</strong>!
+          </mat-error>
+          <mat-error *ngIf="registerForm.get('email').hasError('email')">
+            Email is not valid!
+          </mat-error>
+        </mat-form-field>
 
-    <mat-form-field>
-      <mat-label>Password</mat-label>
-      <input matInput formControlName="password" minlength="6" [type]="hide ? 'text' : 'password'" required>
-      <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
-      <mat-error *ngIf="registerForm.hasError('required', 'password')">
-        Password required!
-      </mat-error>
-      <mat-error *ngIf="registerForm.hasError('minlength', 'password') ">
-        Password must have at least 6 characters !
-      </mat-error>
-    </mat-form-field>
+        <mat-form-field>
+          <mat-label>Display Name</mat-label>
+          <input matInput formControlName="display_name" required>
+          <mat-error *ngIf="registerForm.hasError('required', 'display_name')">
+            Display name required!
+          </mat-error>
+        </mat-form-field>
 
-    <mat-form-field>
-      <mat-label>Confirm Password</mat-label>
-      <input matInput formControlName="repeat_password" [errorStateMatcher]="matcher"
-        [type]="hide_repeated ? 'text' : 'password'" required>
-      <mat-icon matSuffix (click)="hide_repeated = !hide_repeated">{{hide_repeated ? 'visibility' : 'visibility_off'}}
-      </mat-icon>
-      <mat-error *ngIf="registerForm.hasError('notSame')">
-        Passwords do not match
-      </mat-error>
-    </mat-form-field>
+        <mat-form-field>
+          <mat-label>Phone number</mat-label>
+          <input matInput type="text" mask="(0000) 000-000" formControlName="phone">
+        </mat-form-field>
 
-    <button mat-raised-button color="accent" (click)="onRegister()" [disabled]="registerForm.invalid">
-      Register!
-    </button>
-    <br />
-    <span>Already have an account? <a class="link" [routerLink]="'/auth'"><strong>Login</strong></a></span>
-    <span>Forgot your Password? <a class="link" [routerLink]="'/auth/forgot-password'"><strong>Forgot
-          Password</strong></a></span>
-  </form>
+        <mat-form-field>
+          <mat-label>Password</mat-label>
+          <input matInput formControlName="password" minlength="6" [type]="hide ? 'text' : 'password'" required>
+          <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+          <mat-error *ngIf="registerForm.hasError('required', 'password')">
+            Password required!
+          </mat-error>
+          <mat-error *ngIf="registerForm.hasError('minlength', 'password') ">
+            Password must have at least 6 characters !
+          </mat-error>
+        </mat-form-field>
+
+      </div>
+
+      <div fxLayout="row" fxLayout="end end">
+        <button mat-raised-button class="app-color-primary-800" (click)="onRegister()"
+          [disabled]="registerForm.invalid">
+          Register!
+        </button>
+      </div>
+      <br />
+    </form>
+  </div>
 </mat-card>
