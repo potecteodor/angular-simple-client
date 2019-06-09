@@ -1,21 +1,19 @@
-<mat-toolbar class="app-color-primary-800">
+<mat-toolbar class="app-color-primary-900">
   <div fxLayout="row" fxFlex fxLayoutAlign="space-between center">
-    <div>
+    <div fxLayout="row" fxLayoutAlign="start center">
       <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="sideNav.toggle()">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span>Task Manager</span>
+      <span>Project Manager</span>
     </div>
     <div>
       <button mat-button [matMenuTriggerFor]="menu">
         <div fxFlex fxLayout="row" fxLayoutGap="12px" fxLayoutAlign="space-between center">
-          <!--  <img class="avatar" src="http://localhost:40402/src/static/public/deafault-avatar.jpg" /> -->
-          <img class="avatar" [src]="user.avatar || 'assets/images/default-profile.png'" />
+          <img class="toolbar_avatar" [src]="user.avatar || 'assets/images/default-profile.png'" />
           <span class="username mr-12">{{ user.display_name }}</span>
         </div>
       </button>
 
-      <!-- <button mat-button [matMenuTriggerFor]="menu">{{user.display_name}}</button> -->
       <mat-menu #menu="matMenu">
         <button mat-menu-item (click)="onProfile()">
           <mat-icon>people</mat-icon>Profile

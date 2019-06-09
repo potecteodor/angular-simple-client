@@ -34,6 +34,11 @@ export class TopNavigationComponent implements OnInit {
 
   ngOnInit() {
     this.setData()
+    this.userSrv.getOne(this.user.id).subscribe(d => {
+      if (d[0].avatar !== this.user.avatar) {
+        this.user = d[0]
+      }
+    })
   }
 
   onProfile() {
@@ -46,7 +51,6 @@ export class TopNavigationComponent implements OnInit {
       dialogRef.afterClosed().subscribe(d => {
         this.user = d
         sessionStorage.setItem('userInfo', CryptService.crypt(d))
-        // this.user = CryptService.decrypt(sessionStorage.getItem('userInfo'), true)
       })
     })
   }

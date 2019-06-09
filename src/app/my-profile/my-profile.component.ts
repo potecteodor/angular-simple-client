@@ -40,7 +40,6 @@ export class MyProfileComponent implements OnInit {
   }
 
   afterUpload(ev: any) {
-    this.onBtnClick('close')
     const e = ev.event
     if (ev.event && ev.event.body) {
       if (!this.dataFile[this.filesProperty]) {
