@@ -1,16 +1,15 @@
+<app-top-navigation [sideNav]="drawer"></app-top-navigation>
+<mat-progress-bar mode="indeterminate" color="warn" *ngIf="loading">
+</mat-progress-bar>
+
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #drawer class="sidenav custom-white-500" fixedInViewport="true"
-    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
-    [opened]="!(isHandset$ | async)">
-    <mat-toolbar class="custom-white-500">Menu</mat-toolbar>
-    <br />
-    <app-left-navigation></app-left-navigation>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <app-top-navigation [sideNav]="drawer"></app-top-navigation>
-    <mat-progress-bar mode="indeterminate" color="warn" *ngIf="loading">
-    </mat-progress-bar>
-    <!-- Add Content Here -->
-    <router-outlet *ngIf="true"></router-outlet>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+    <mat-sidenav #drawer class="sidenav mat-elevation-z4 app-color-secondary-50"
+      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
+      [opened]="!(isHandset$ | async)">
+      <app-left-navigation></app-left-navigation>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <!-- Add Content Here -->
+      <router-outlet *ngIf="true"></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>

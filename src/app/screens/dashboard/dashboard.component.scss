@@ -28,15 +28,11 @@
   text-align: center;
 }
 
-.listCard {
-  max-width: 350px;
-  min-width: 350px;
-  min-height: 300px;
-  max-height: 300px
+.listCard{
+  min-width: 410px;
+  width: calc(100vh - 20px);
 }
 
-.collabCard {
-  margin: auto;
-  height: 300px;
-  min-width: 400px
+.container{
+  margin: 20px;
 }

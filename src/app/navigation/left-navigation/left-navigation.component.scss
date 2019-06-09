@@ -1,0 +1,17 @@
+.mat-list-item.active,
+.mat-list-item:hover {
+  background-color: #fff;
+  color: #1f515f;
+  border-left: 3px solid #2e6471;
+}
+.mat-list-item {
+  border-left: 3px solid transparent;
+}
+
+.mat-list-item:hover {
+  border-left: 3px solid #c7d9dd;
+}
+
+.mat-list-item .mat-icon {
+  margin-right: 11px;
+}

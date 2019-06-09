@@ -19,6 +19,11 @@ const routes: Routes = [
     children: [
       {
         path: '',
+        redirectTo: 'home',
+        pathMatch: 'full'
+      },
+      {
+        path: 'home',
         canActivate: [AuthGuard],
         loadChildren: () => DashboardModule,
       },

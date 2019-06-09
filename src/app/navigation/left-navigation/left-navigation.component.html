@@ -1,19 +1,22 @@
 <mat-nav-list>
-  <a mat-list-item [routerLink]="'/'">
-    <mat-icon>home</mat-icon>Home
+  <a mat-list-item [routerLink]="'/home'"  [routerLinkActive]="'active'">
+    <mat-icon>home</mat-icon> Home
   </a>
-  <a mat-list-item [routerLink]="'/collaborators'">
-    <mat-icon>people</mat-icon>Collaborators
+  <mat-divider></mat-divider>
+  <a mat-list-item [routerLink]="'/collaborators'" [routerLinkActive]="'active'">
+    <mat-icon>people</mat-icon> Collaborators
   </a>
-  <a mat-list-item [routerLink]="'/project'">
-    <mat-icon>domain</mat-icon>Projects
+  <mat-divider></mat-divider>
+  <a mat-list-item [routerLink]="'/project'" [routerLinkActive]="'active'">
+    <mat-icon>domain</mat-icon> Projects
   </a>
-  <a mat-list-item [routerLink]="'/task'">
-    <mat-icon>dashboard</mat-icon>Tasks
+  <mat-divider></mat-divider>
+  <a mat-list-item [routerLink]="'/task'" [routerLinkActive]="'active'">
+    <mat-icon>dashboard</mat-icon> Tasks
   </a>
-  <a mat-list-item [routerLink]="'/communication'">
-    <mat-icon>chat_bubble</mat-icon>Communication
+  <mat-divider></mat-divider>
+  <a mat-list-item [routerLink]="'/communication'" [routerLinkActive]="'active'">
+    <mat-icon>chat_bubble</mat-icon> Communication
   </a>
-
-
+  <mat-divider></mat-divider>
 </mat-nav-list>
