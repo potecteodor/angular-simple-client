@@ -1,5 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
-import { MatDialog, MatSidenav, MatSnackBar } from '@angular/material'
+import {
+  MatDialog,
+  MatPaginator,
+  MatSidenav,
+  MatSnackBar,
+  MatSort,
+  MatTableDataSource,
+} from '@angular/material'
 import { Router } from '@angular/router'
 import { CommonPopupComponent } from '../../common-popup/common-popup.component'
 import { CryptService } from '../../core/services/crypt.service'
@@ -11,12 +18,28 @@ import { ProjectService } from './project.service'
   styleUrls: ['./project.component.scss'],
 })
 export class ProjectComponent implements OnInit {
+  isEditable = false
+  displayedColumns: string[] = [
+    'name',
+    'start_date',
+    'end_date',
+    'description',
+    'actions',
+  ]
+  dataSource: MatTableDataSource<any>
+
   @ViewChild('sidenav') sidenav: MatSidenav
   @ViewChild('editSidenav') editSidenav: MatSidenav
 
+  @ViewChild(MatPaginator) paginator: MatPaginator
+  @ViewChild(MatSort) sort: MatSort
+
   selectedProject = null
+  allProjects = []
   myProjects = []
   otherProjects = []
+  filterMenuText = 'All Projects'
+  userID
 
   constructor(
     private srv: ProjectService,
@@ -26,32 +49,68 @@ export class ProjectComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.userID = CryptService.decrypt(sessionStorage.getItem('userInfo'), true).id
     this.getProjects()
   }
 
   onProjectClick(project) {
-    const pID = CryptService.crypt({ id: project.id })
-    this.router.navigate(['/project/detail/' + pID])
+    /*  const pID = CryptService.crypt({ id: project.id })
+    this.router.navigate(['/project/detail/' + pID]) */
+    this.selectedProject = project
+    this.isEditable = false
+    this.editSidenav.open()
+  }
+
+  filter(filter) {
+    if (filter === 'all') {
+      this.filterMenuText = 'All Projects'
+      this.dataSource = new MatTableDataSource(this.allProjects)
+      this.dataSource.paginator = this.paginator
+      this.dataSource.sort = this.sort
+    }
+    if (filter === 'my') {
+      this.filterMenuText = 'My Projects'
+      this.dataSource = new MatTableDataSource(this.myProjects)
+      this.dataSource.paginator = this.paginator
+      this.dataSource.sort = this.sort
+    }
+    if (filter === 'other') {
+      this.filterMenuText = 'Other Projects'
+      this.dataSource = new MatTableDataSource(this.otherProjects)
+      this.dataSource.paginator = this.paginator
+      this.dataSource.sort = this.sort
+    }
   }
 
   onOtherProjectClick(project) {
-    const pID = CryptService.crypt({ id: project.project_id })
-    this.router.navigate(['/project/detail/' + pID])
+    /* const pID = CryptService.crypt({ id: project.project_id })
+    this.router.navigate(['/project/detail/' + pID]) */
+    this.selectedProject = project
+    this.isEditable = false
+    this.editSidenav.open()
   }
 
   getProjects() {
     const id = CryptService.decrypt(sessionStorage.getItem('userInfo'), true).id
     this.srv.getMyProjects(id).subscribe(d => {
       this.myProjects = d
-    })
-    this.srv.getOtherProjects(id).subscribe(d => {
-      this.otherProjects = d
+      this.allProjects = d
+      this.srv.getOtherProjects(id).subscribe(otherP => {
+        this.otherProjects = otherP
+        otherP.map(el => {
+          this.allProjects.push(el)
+        })
+        this.dataSource = new MatTableDataSource(this.allProjects)
+        this.dataSource.paginator = this.paginator
+        this.dataSource.sort = this.sort
+      })
     })
   }
   onCreateProject() {}
 
   onEdit(project) {
     this.selectedProject = project
+    this.isEditable = true
     this.editSidenav.open()
   }
   onDelete(project) {
@@ -102,6 +161,14 @@ export class ProjectComponent implements OnInit {
       this.editSidenav.close()
       this.selectedProject = null
       this.getProjects()
+    }
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase()
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage()
     }
   }
 }

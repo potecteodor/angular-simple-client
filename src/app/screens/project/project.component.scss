@@ -6,3 +6,20 @@
 .projectLists {
   padding: 15px;
 }
+
+table {
+  width: 100%;
+}
+
+.searchField {
+  padding-left: 30px;
+  width: 400px !important;
+}
+
+tr.rowHover:not(.example-expanded-row):hover {
+  background: #777;
+}
+
+tr.rowHover:not(.example-expanded-row):active {
+  background: #efefef;
+}

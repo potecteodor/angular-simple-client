@@ -1,6 +1,9 @@
 <mat-sidenav-container class="addSideNav">
-  <mat-toolbar class="app-color-secondary-900" fxLayout="row" fxLayoutAlign="space-between center">
-    Collaborators
+  <mat-toolbar class="app-color-secondary-500" fxLayout="row" fxLayoutAlign="space-between center">
+    <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
+      <mat-icon>people</mat-icon>
+      <span>Collaborators</span>
+    </div>
     <button mat-button (click)="sidenav.open()">
       <mat-icon>add</mat-icon>
       Add Collaborator
@@ -61,7 +64,7 @@
         </tr>
       </table>
 
-      <mat-paginator *ngIf="collaborators.length>5" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
     </div>
   </div>
 </mat-sidenav-container>

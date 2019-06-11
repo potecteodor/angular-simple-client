@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { MatSnackBar } from '@angular/material'
 import { IProject } from '../../../core/interfaces/project.interface'
+import { CryptService } from '../../../core/services/crypt.service'
 import { CollaboratorsService } from '../../collaborators/collaborators.service'
 import { ProjectService } from '../project.service'
 
@@ -12,11 +13,15 @@ import { ProjectService } from '../project.service'
 export class EditProjectComponent implements OnInit {
   @Output()
   eventOutput = new EventEmitter()
+  @Input() isEditable
 
   @Input() project: IProject
   members = []
+  membersFullObject = []
   collaborators = []
+  projectOwner
   initialProjectName
+  userID
 
   constructor(
     private srv: ProjectService,
@@ -25,9 +30,15 @@ export class EditProjectComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.userID = CryptService.decrypt(sessionStorage.getItem('userInfo'), true).id
+    this.srv.getProjectOwner(this.project.id).subscribe(owner => {
+      this.projectOwner = owner[0]
+    })
     this.initialProjectName = this.project.name
     this.getCollaborators()
     this.getMembers()
+    this.project.start_date = new Date(this.project.start_date)
+    this.project.end_date = new Date(this.project.end_date)
   }
 
   getCollaborators() {
@@ -47,6 +58,7 @@ export class EditProjectComponent implements OnInit {
     this.srv.getProjectMembers(this.project.id).subscribe(d => {
       if (d && d.length > 0) {
         d.map(element => {
+          this.membersFullObject.push(element)
           this.members.push(element.id)
         })
       }

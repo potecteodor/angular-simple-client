@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core'
+import { MatChipsModule, MatExpansionModule } from '@angular/material'
 import { RouterModule } from '@angular/router'
 import { CommonPopupComponent } from '../../common-popup/common-popup.component'
 import { CommonPopupModule } from '../../common-popup/common-popup.module'
@@ -24,6 +25,8 @@ import { ProjectService } from './project.service'
     AppSharedModule,
     CommonPopupModule,
     ProfilePopupModule,
+    MatExpansionModule,
+    MatChipsModule,
     RouterModule.forChild([
       {
         path: '',
