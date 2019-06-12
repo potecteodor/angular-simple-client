@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core'
+import { MatChipsModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
 import { RouterModule } from '@angular/router'
 import { CommonPopupComponent } from '../../common-popup/common-popup.component'
 import { CommonPopupModule } from '../../common-popup/common-popup.module'
@@ -21,6 +22,7 @@ import { TaskService } from './task.service'
   imports: [
     AppSharedModule,
     CommonPopupModule,
+    MatChipsModule,
     RouterModule.forChild([
       {
         path: '',
@@ -35,7 +37,13 @@ import { TaskService } from './task.service'
       },
     ]),
   ],
-  providers: [TaskService, ProjectService, TaskDetailResolverService],
-  entryComponents: [CommonPopupComponent],
+  providers: [
+    TaskService,
+    ProjectService,
+    TaskDetailResolverService,
+    { provide: MatDialogRef, useValue: {} },
+    { provide: MAT_DIALOG_DATA, useValue: {} },
+  ],
+  entryComponents: [CommonPopupComponent, CreateTaskComponent],
 })
 export class TaskModule {}

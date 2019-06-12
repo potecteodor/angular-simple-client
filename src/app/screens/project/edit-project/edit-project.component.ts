@@ -18,6 +18,7 @@ export class EditProjectComponent implements OnInit {
   @Input() project: IProject
   members = []
   membersFullObject = []
+  tasks = []
   collaborators = []
   projectOwner
   initialProjectName
@@ -33,6 +34,9 @@ export class EditProjectComponent implements OnInit {
     this.userID = CryptService.decrypt(sessionStorage.getItem('userInfo'), true).id
     this.srv.getProjectOwner(this.project.id).subscribe(owner => {
       this.projectOwner = owner[0]
+    })
+    this.srv.getTasks(this.project.id).subscribe(tasks => {
+      this.tasks = tasks
     })
     this.initialProjectName = this.project.name
     this.getCollaborators()

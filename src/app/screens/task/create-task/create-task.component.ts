@@ -1,5 +1,6 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core'
+import { Component, Inject, OnInit } from '@angular/core'
 import { MatSnackBar } from '@angular/material'
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { ITask } from '../../../core/interfaces/task.interface'
 import { CryptService } from '../../../core/services/crypt.service'
 import { ProjectService } from '../../project/project.service'
@@ -14,9 +15,6 @@ export class CreateTaskComponent implements OnInit {
   statuses = ['Not Started', 'Started', 'Testing', 'Completed']
   priorities = ['Low', 'Medium', ' High', 'Urgent']
 
-  @Output()
-  eventOutput = new EventEmitter()
-
   task: ITask
   members = []
   collaborators = []
@@ -25,7 +23,9 @@ export class CreateTaskComponent implements OnInit {
   constructor(
     private srv: TaskService,
     private pSrv: ProjectService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    public dialogRef: MatDialogRef<CreateTaskComponent>,
+    @Inject(MAT_DIALOG_DATA) public data
   ) {}
 
   ngOnInit() {
@@ -60,7 +60,7 @@ export class CreateTaskComponent implements OnInit {
   }
 
   onClose() {
-    this.eventOutput.emit('close')
+    this.dialogRef.close('close')
   }
 
   onAdd() {
@@ -68,7 +68,7 @@ export class CreateTaskComponent implements OnInit {
       if (d === true) {
         this.srv.createTask(this.task, this.members).subscribe(data => {
           if (data === true) {
-            this.eventOutput.emit('add')
+            this.dialogRef.close('add')
             this.initProject()
             this.members = []
             this.snackBar.open('Task created!', '', {

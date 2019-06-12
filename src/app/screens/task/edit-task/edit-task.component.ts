@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { MatSnackBar } from '@angular/material'
+import { CryptService } from '../../../core/services/crypt.service'
 import { ProjectService } from '../../project/project.service'
 import { TaskService } from '../task.service'
 
@@ -14,10 +15,14 @@ export class EditTaskComponent implements OnInit {
   @Output()
   eventOutput = new EventEmitter()
 
+  @Input() isEditable
+
   @Input() task
   members = []
   collaborators = []
   initialTaskName
+  userID
+  project
 
   constructor(
     private srv: TaskService,
@@ -27,9 +32,13 @@ export class EditTaskComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.userID = CryptService.decrypt(sessionStorage.getItem('userInfo'), true).id
     this.projectSelect()
     this.initialTaskName = this.task.subject
     this.getMembers()
+    this.srv.getProject(this.task.id).subscribe(project => {
+      this.project = project[0]
+    })
   }
 
   projectSelect() {

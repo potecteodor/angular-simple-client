@@ -1,16 +1,21 @@
   <mat-sidenav-container class="taskCreator">
-    <mat-toolbar class="app-color-secondary-900" fxLayout="row" fxLayoutAlign="space-between center">
-      Tasks
-      <button mat-button (click)="sidenav.toggle()">
+    <mat-toolbar class="app-color-secondary-500" fxLayout="row" fxLayoutAlign="space-between center">
+      <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
+        <mat-icon>dashboard</mat-icon>
+        <span>Tasks</span>
+      </div>
+      <button mat-button (click)="createTask()">
         <mat-icon>add</mat-icon>
         Create Task
       </button>
     </mat-toolbar>
-    <mat-sidenav #sidenav disableClose="true" position="end" mode="over" opened="false">
+
+    <!-- <mat-sidenav #sidenav disableClose="true" position="end" mode="over" opened="false">
       <app-create-task (eventOutput)="eventListener($event)"></app-create-task>
-    </mat-sidenav>
-    <mat-sidenav #editSidenav disableClose="true" position="start" mode="over" opened="false">
-      <app-edit-task *ngIf="selectedTask!==null" [task]="selectedTask" (eventOutput)="eventListener($event)">
+    </mat-sidenav> -->
+    <mat-sidenav #editSidenav disableClose="true" position="end" mode="side" opened="false">
+      <app-edit-task [isEditable]="isEditable" *ngIf="selectedTask!==null" [task]="selectedTask"
+        (eventOutput)="eventListener($event)">
       </app-edit-task>
     </mat-sidenav>
 
@@ -18,53 +23,91 @@
       No tasks! Create one.
     </div>
 
-    <div fxLayout="row" fxLayoutAlign="space-between start" class="taskLists">
-
-      <div *ngIf="myTasks.length>0" fxFlex="50">
-        <h1>Tasks</h1>
-        <mat-nav-list>
-          <mat-list-item *ngFor="let task of myTasks">
-            <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex="60">
-              <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" fxFlex (click)="onTaskClick(task)">
-                <mat-icon>folder</mat-icon>
-                {{task.subject}}
-              </div>
-              <div>
-                <button mat-icon-button [matMenuTriggerFor]="menu">
-                  <mat-icon>more_vert</mat-icon>
-                </button>
-                <mat-menu #menu="matMenu">
-                  <button mat-menu-item (click)="onTaskClick(task)">
-                    <mat-icon>remove_red_eye</mat-icon>
-                    <span>View</span>
-                  </button>
-                  <button mat-menu-item (click)="onEdit(task)">
-                    <mat-icon>edit</mat-icon>
-                    <span>Edit</span>
-                  </button>
-                  <mat-divider></mat-divider>
-                  <button mat-menu-item (click)="onDelete(task)">
-                    <mat-icon>delete</mat-icon>
-                    <span>Remove</span>
-                  </button>
-                </mat-menu>
-              </div>
-            </div>
-          </mat-list-item>
-        </mat-nav-list>
+    <div fxFill *ngIf="allTasks.length>0">
+      <div style="background-color:rgb(243, 239, 239); height: 50px" fxLayout="row"
+        fxLayoutAlign="space-between center">
+        <div>
+          <button mat-button [matMenuTriggerFor]="menu">{{filterMenuText}}<mat-icon>keyboard_arrow_down</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item [disabled]="filterMenuText==='All Tasks'" (click)="filter('all')">All
+              Tasks</button>
+            <button mat-menu-item [disabled]="filterMenuText==='My Tasks'" (click)="filter('my')">My
+              Tasks</button>
+            <button mat-menu-item [disabled]="filterMenuText==='Other Tasks'" (click)="filter('other')">Other
+              Tasks</button>
+          </mat-menu>
+        </div>
+        <mat-form-field class="searchField" floatLabel="never">
+          <input matInput autocomplete="searchField" (keyup)="applyFilter($event.target.value)" placeholder="Search...">
+          <mat-icon matPrefix>search</mat-icon>
+        </mat-form-field>
       </div>
 
-      <div *ngIf="otherTasks.length>0" fxFlex="50">
-        <h1>Other Tasks</h1>
-        <mat-nav-list>
-          <mat-list-item *ngFor="let task of otherTasks">
-            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" (click)="onOtherTaskClick(task)">
-              <mat-icon>folder</mat-icon>
-              {{task.subject}}
-            </div>
-          </mat-list-item>
-        </mat-nav-list>
-      </div>
+      <table mat-table [dataSource]="dataSource" matSort>
+
+        <ng-container matColumnDef="subject">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Subject </th>
+          <td mat-cell *matCellDef="let row"> {{row.subject}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="start_date">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Start Date </th>
+          <td mat-cell *matCellDef="let row"> {{row.start_date ? (row.start_date | date:'mediumDate') : ''}}
+          </td>
+        </ng-container>
+
+        <!-- Progress Column -->
+        <ng-container matColumnDef="end_date">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> End Date </th>
+          <td mat-cell *matCellDef="let row">{{row.end_date ? (row.end_date | date:'mediumDate') : ''}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="priority">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Priority </th>
+          <td mat-cell *matCellDef="let row"> {{row.priority}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+          <td mat-cell *matCellDef="let row"> {{row.status}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
+          <td mat-cell *matCellDef="let row"> {{row.description}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell (click)="$event.stopPropagation()" *matCellDef="let row">
+            <button mat-icon-button [matMenuTriggerFor]="actionMenu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #actionMenu="matMenu">
+              <button mat-menu-item (click)="onTaskClick(row)">
+                <mat-icon>remove_red_eye</mat-icon>
+                <span>View</span>
+              </button>
+              <button [disabled]="row.created_by !== userID" mat-menu-item (click)="onEdit(row)">
+                <mat-icon>edit</mat-icon>
+                <span>Edit</span>
+              </button>
+              <mat-divider></mat-divider>
+              <button [disabled]="row.created_by !== userID" mat-menu-item (click)="onDelete(row)">
+                <mat-icon>delete</mat-icon>
+                <span>Remove</span>
+              </button>
+            </mat-menu>
+          </td>
+        </ng-container>
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="rowHover" (click)="onRowClick(row)">
+        </tr>
+      </table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
     </div>
 
   </mat-sidenav-container>
