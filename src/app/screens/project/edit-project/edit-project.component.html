@@ -13,30 +13,91 @@
   <div class="addProjectForm">
     <br />
     <div fxLayout="column" fxLayoutGap="20px">
-      <div fxLayout="row" fxLayoutAlign="start center">
-        <mat-label class="secondary-text">Project Owner:</mat-label>
-        <mat-label *ngIf="projectOwner">{{projectOwner.display_name}}</mat-label>
-      </div>
+      <mat-accordion multi="true">
+        <mat-expansion-panel expanded="true" class="mat-elevation-z6">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Project Information
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+            <mat-label class="secondary-text">Project Owner:</mat-label>
+            <mat-label *ngIf="projectOwner">{{projectOwner.display_name}}</mat-label>
+          </div>
 
-      <div fxLayout="row" fxLayoutAlign="space-between center">
-        <mat-label class="secondary-text">Start Date:</mat-label>
-        <mat-label>{{project.start_date | date:'mediumDate'}}</mat-label>
-      </div>
-      <div fxLayout="row" fxLayoutAlign="space-between center">
-        <mat-label class="secondary-text">End Date:</mat-label>
-        <mat-label>{{project.end_date | date:'mediumDate'}}</mat-label>
-      </div>
-      <div fxLayout="row" fxLayoutAlign="start center">
-        <mat-label class="secondary-text">Description:</mat-label>
-        <mat-label>{{project.description}}</mat-label>
-      </div>
-      <br />
-      <mat-label class="secondary-text">Members</mat-label>
-      <mat-chip-list>
-        <mat-chip *ngFor="let member of membersFullObject">
-          {{member.display_name}}
-        </mat-chip>
-      </mat-chip-list>
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+            <mat-label class="secondary-text">Start Date:</mat-label>
+            <mat-label>{{project.start_date | date:'mediumDate'}}</mat-label>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+            <mat-label class="secondary-text">End Date:</mat-label>
+            <mat-label>{{project.end_date | date:'mediumDate'}}</mat-label>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+            <mat-label class="secondary-text">Description:</mat-label>
+            <mat-label>{{project.description}}</mat-label>
+          </div>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel expanded="true" class="mat-elevation-z6">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Project Members
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-nav-list>
+            <mat-list-item *ngFor="let member of membersFullObject">
+              <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
+                <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" fxFlex>
+                  <img class="avatarImg" [src]="member.avatar || 'assets/images/default-profile.png'" />
+                  {{member.display_name}}({{member.email}})
+                </div>
+                <div>
+                  <button mat-icon-button [matMenuTriggerFor]="menu">
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
+                  <mat-menu #menu="matMenu">
+                    <button mat-menu-item>
+                      <mat-icon>remove_red_eye</mat-icon>
+                      <span>View Profile</span>
+                    </button>
+                  </mat-menu>
+                </div>
+              </div>
+            </mat-list-item>
+          </mat-nav-list>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel expanded="true" class="mat-elevation-z6">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Tasks
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-nav-list>
+            <mat-list-item *ngFor="let task of tasks">
+              <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
+                <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" fxFlex>
+                  {{task.subject}}
+                </div>
+                <div>
+                  <button mat-icon-button [matMenuTriggerFor]="menu">
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
+                  <mat-menu #menu="matMenu">
+                    <button mat-menu-item>
+                      <mat-icon>remove_red_eye</mat-icon>
+                      <span>View Profile</span>
+                    </button>
+                  </mat-menu>
+                </div>
+              </div>
+            </mat-list-item>
+          </mat-nav-list>
+        </mat-expansion-panel>
+
+      </mat-accordion>
+
     </div>
   </div>
 </div>

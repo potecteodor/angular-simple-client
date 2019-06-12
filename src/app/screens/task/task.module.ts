@@ -1,5 +1,10 @@
 import { NgModule } from '@angular/core'
-import { MatChipsModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
+import {
+  MatChipsModule,
+  MatDialogRef,
+  MatExpansionModule,
+  MAT_DIALOG_DATA,
+} from '@angular/material'
 import { RouterModule } from '@angular/router'
 import { CommonPopupComponent } from '../../common-popup/common-popup.component'
 import { CommonPopupModule } from '../../common-popup/common-popup.module'
@@ -23,6 +28,7 @@ import { TaskService } from './task.service'
     AppSharedModule,
     CommonPopupModule,
     MatChipsModule,
+    MatExpansionModule,
     RouterModule.forChild([
       {
         path: '',

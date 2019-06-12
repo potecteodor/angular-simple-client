@@ -56,10 +56,9 @@ export class EditTaskComponent implements OnInit {
 
   getMembers() {
     this.srv.getTaskMembers(this.task.id).subscribe(d => {
-      console.log(d)
       if (d && d.length > 0) {
         d.map(element => {
-          this.members.push(element.id)
+          this.members.push(element)
         })
       }
     })

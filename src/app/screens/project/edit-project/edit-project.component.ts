@@ -72,6 +72,7 @@ export class EditProjectComponent implements OnInit {
 
   onClose() {
     this.eventOutput.emit('close')
+    this.isEditable = false
   }
 
   onEdit() {

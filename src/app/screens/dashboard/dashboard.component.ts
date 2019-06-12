@@ -31,30 +31,28 @@ export class DashboardComponent implements OnInit {
     this.getProjects()
     this.getCollaborators()
     this.getTasks()
-    this.createChart()
   }
 
   // read more at: https://developers.google.com/chart/interactive/docs/gallery/timeline
   createChart() {
+    const chartProjects = []
+    this.projects.map(p => {
+      chartProjects.push([p.name, new Date(p.start_date), new Date(p.end_date)])
+    })
     function drawChart() {
-    const container = document.getElementById('elementId')
-    const chart = new google.visualization.Timeline(container)
-    const dataTable = new google.visualization.DataTable()
+      const container = document.getElementById('elementId')
+      const chart = new google.visualization.Timeline(container)
+      const dataTable = new google.visualization.DataTable()
 
-    dataTable.addColumn({ type: 'string', id: 'President' })
-    dataTable.addColumn({ type: 'date', id: 'Start' })
-    dataTable.addColumn({ type: 'date', id: 'End' })
-    dataTable.addRows([
-      ['Washington', new Date(1789, 3, 30), new Date(1797, 2, 4)],
-      ['Adams', new Date(1797, 2, 4), new Date(1801, 2, 4)],
-      ['Jefferson', new Date(1801, 2, 4), new Date(1809, 2, 4)]])
+      dataTable.addColumn({ type: 'string', id: 'name' })
+      dataTable.addColumn({ type: 'date', id: 'start_date' })
+      dataTable.addColumn({ type: 'date', id: 'end_date' })
+      dataTable.addRows(chartProjects)
 
-    chart.draw(dataTable)
+      chart.draw(dataTable)
     }
     google.charts.setOnLoadCallback(drawChart)
   }
-
-
 
   goTo(url) {
     this.router.navigate([url])
@@ -68,6 +66,7 @@ export class DashboardComponent implements OnInit {
           this.projects.push(el)
         }
       })
+      this.createChart()
     })
   }
   getCollaborators() {
