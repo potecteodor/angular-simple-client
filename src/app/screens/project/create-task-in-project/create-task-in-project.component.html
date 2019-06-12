@@ -1,0 +1,65 @@
+<mat-toolbar fxLayout="row" fxLayoutAlign="space-between center">
+  Create Task in project: {{projectName}}
+  <div>
+    <button mat-icon-button matTooltip="Close" (click)="onClose()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>
+<div class="addTaskForm">
+  <br />
+  <div fxLayout="column">
+    <div fxLayout="column" *ngIf="task.project_id">
+      <mat-form-field>
+        <mat-label>Subject</mat-label>
+        <input matInput type="text" [(ngModel)]="task.subject" required>
+      </mat-form-field>
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <mat-form-field>
+          <mat-label>Start Date</mat-label>
+          <input matInput [matDatepicker]="picker1" [(ngModel)]="task.start_date" required>
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>End Date</mat-label>
+          <input matInput [matDatepicker]="picker2" [(ngModel)]="task.end_date" required>
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <mat-form-field fxFlex="45">
+          <mat-label>Priority</mat-label>
+          <mat-select [(ngModel)]="task.priority">
+            <mat-option *ngFor="let priority of priorities" [value]="priority">
+              {{priority}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field fxFlex="45">
+          <mat-label>Progress Status</mat-label>
+          <mat-select [(ngModel)]="task.status">
+            <mat-option *ngFor="let status of statuses" [value]="status">
+              {{status}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <mat-form-field>
+        <mat-label>Assigned To:</mat-label>
+        <mat-select [(ngModel)]="members" multiple>
+          <mat-option *ngFor="let member of collaborators" [value]="member.id">
+            {{member.display_name}}({{member.email}})</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Description</mat-label>
+        <textarea matInput type="text" [(ngModel)]="task.description"></textarea>
+      </mat-form-field>
+      <button mat-raised-button color="accent" (click)="onAdd()" [disabled]="task.subject===''">
+        Create Task
+      </button>
+    </div>
+  </div>
+</div>

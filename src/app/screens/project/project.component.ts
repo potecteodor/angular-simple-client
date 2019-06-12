@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core'
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core'
 import {
   MatDialog,
   MatPaginator,
@@ -10,12 +10,14 @@ import {
 import { Router } from '@angular/router'
 import { CommonPopupComponent } from '../../common-popup/common-popup.component'
 import { CryptService } from '../../core/services/crypt.service'
+import { CreateTaskInProjectComponent } from './create-task-in-project/create-task-in-project.component'
 import { ProjectService } from './project.service'
 
 @Component({
   selector: 'app-project',
   templateUrl: './project.component.html',
   styleUrls: ['./project.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class ProjectComponent implements OnInit {
   isEditable = false
@@ -107,6 +109,13 @@ export class ProjectComponent implements OnInit {
     })
   }
   onCreateProject() {}
+
+  addTask(project) {
+    const dialogRef = this.dialog.open(CreateTaskInProjectComponent, {
+      data: project,
+      panelClass: 'addTaskDialogClass',
+    })
+  }
 
   onEdit(project) {
     this.selectedProject = project

@@ -23,3 +23,7 @@ tr.rowHover:not(.example-expanded-row):hover {
 tr.rowHover:not(.example-expanded-row):active {
   background: #efefef;
 }
+
+.addTaskDialogClass .mat-dialog-container {
+  padding: 0px !important;
+}

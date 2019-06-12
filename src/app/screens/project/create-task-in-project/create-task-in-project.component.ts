@@ -1,54 +1,48 @@
-import { Component, OnInit } from '@angular/core'
-import { MatSnackBar } from '@angular/material'
-import { MatDialogRef } from '@angular/material/dialog'
+import { Component, Inject, OnInit } from '@angular/core'
+import { MatDialogRef, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material'
 import { ITask } from '../../../core/interfaces/task.interface'
-import { CryptService } from '../../../core/services/crypt.service'
-import { ProjectService } from '../../project/project.service'
-import { TaskService } from '../task.service'
+import { CreateTaskComponent } from '../../task/create-task/create-task.component'
+import { TaskService } from '../../task/task.service'
+import { ProjectService } from '../project.service'
 
 @Component({
-  selector: 'app-create-task',
-  templateUrl: './create-task.component.html',
-  styleUrls: ['./create-task.component.scss'],
+  selector: 'app-create-task-in-project',
+  templateUrl: './create-task-in-project.component.html',
+  styleUrls: ['./create-task-in-project.component.scss'],
 })
-export class CreateTaskComponent implements OnInit {
+export class CreateTaskInProjectComponent implements OnInit {
   statuses = ['Not Started', 'Started', 'Testing', 'Completed']
   priorities = ['Low', 'Medium', ' High', 'Urgent']
 
   task: ITask
   members = []
   collaborators = []
-  projects = []
+  projectName = ''
 
   constructor(
     private srv: TaskService,
-    private pSrv: ProjectService,
     private snackBar: MatSnackBar,
-    public dialogRef: MatDialogRef<CreateTaskComponent>
-  ) {}
-
-  ngOnInit() {
-    this.getProjects()
-    this.initProject()
+    private pSrv: ProjectService,
+    public dialogRef: MatDialogRef<CreateTaskComponent>,
+    @Inject(MAT_DIALOG_DATA) public data
+  ) {
+    this.initTask()
+    this.task.project_id = data.id
+    this.projectName = data.name
+    this.getMembers()
   }
 
-  projectSelect(ev) {
-    this.pSrv.getProjectMembers(ev.value).subscribe(d => {
+  ngOnInit() {}
+
+  getMembers() {
+    this.pSrv.getProjectMembers(this.task.project_id).subscribe(d => {
       this.collaborators = d
       this.members = []
     })
   }
 
-  getProjects() {
-    const id = CryptService.decrypt(sessionStorage.getItem('userInfo'), true).id
-    this.pSrv.getMyProjects(id).subscribe(d => {
-      this.projects = d
-    })
-  }
-
-  initProject() {
+  initTask() {
     this.task = {
-      project_id: null,
       subject: '',
       priority: '',
       status: '',
@@ -68,7 +62,7 @@ export class CreateTaskComponent implements OnInit {
         this.srv.createTask(this.task, this.members).subscribe(data => {
           if (data === true) {
             this.dialogRef.close('add')
-            this.initProject()
+            this.initTask()
             this.members = []
             this.snackBar.open('Task created!', '', {
               duration: 3000,

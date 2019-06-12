@@ -1,14 +1,23 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
-import { MatSnackBar } from '@angular/material'
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewEncapsulation,
+} from '@angular/core'
+import { MatDialog, MatSnackBar } from '@angular/material'
 import { IProject } from '../../../core/interfaces/project.interface'
 import { CryptService } from '../../../core/services/crypt.service'
 import { CollaboratorsService } from '../../collaborators/collaborators.service'
+import { CreateTaskInProjectComponent } from '../create-task-in-project/create-task-in-project.component'
 import { ProjectService } from '../project.service'
 
 @Component({
   selector: 'app-edit-project',
   templateUrl: './edit-project.component.html',
   styleUrls: ['./edit-project.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class EditProjectComponent implements OnInit {
   @Output()
@@ -27,7 +36,8 @@ export class EditProjectComponent implements OnInit {
   constructor(
     private srv: ProjectService,
     private srvCollab: CollaboratorsService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -35,14 +45,18 @@ export class EditProjectComponent implements OnInit {
     this.srv.getProjectOwner(this.project.id).subscribe(owner => {
       this.projectOwner = owner[0]
     })
-    this.srv.getTasks(this.project.id).subscribe(tasks => {
-      this.tasks = tasks
-    })
+    this.getTasks()
     this.initialProjectName = this.project.name
     this.getCollaborators()
     this.getMembers()
     this.project.start_date = new Date(this.project.start_date)
     this.project.end_date = new Date(this.project.end_date)
+  }
+
+  getTasks() {
+    this.srv.getTasks(this.project.id).subscribe(tasks => {
+      this.tasks = tasks
+    })
   }
 
   getCollaborators() {
@@ -73,6 +87,16 @@ export class EditProjectComponent implements OnInit {
   onClose() {
     this.eventOutput.emit('close')
     this.isEditable = false
+  }
+
+  addTask() {
+    const dialogRef = this.dialog.open(CreateTaskInProjectComponent, {
+      data: this.project,
+      panelClass: 'addTaskDialogClass',
+    })
+    dialogRef.afterClosed().subscribe(action => {
+      this.getTasks()
+    })
   }
 
   onEdit() {
