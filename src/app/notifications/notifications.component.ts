@@ -24,6 +24,7 @@ export class NotificationsComponent implements OnInit {
 
   ngOnInit() {
     this.srv.getNotifications().subscribe(d => {
+      this.notifications = []
       this.notificationsNumber = 0
       d.map(el => {
         el.time = new Date(el.time)
@@ -42,7 +43,11 @@ export class NotificationsComponent implements OnInit {
           verticalPosition: 'bottom',
         }
         config.panelClass = ['custom-class']
-        this.snackBar.open(d[d.length - 1].message, '', config)
+        this.snackBar.open(
+          d[d.length - 1].type + ' notification: ' + d[d.length - 1].message,
+          '',
+          config
+        )
       } else {
         this.ok = true
       }

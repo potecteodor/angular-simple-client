@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { MatDialog } from '@angular/material'
 import { CryptService } from '../../core/services/crypt.service'
 import { UserService } from '../../core/services/user.service'
+import { FireBaseService } from '../../notifications/firebase.service'
 import { ProfilePopupComponent } from '../../profile-popup/profile-popup.component'
 import { CommunicationService } from './communication.service'
 
@@ -21,7 +22,8 @@ export class CommunicationComponent implements OnInit {
   constructor(
     private srv: CommunicationService,
     private userSrv: UserService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private fbSrv: FireBaseService
   ) {
     const data = CryptService.decrypt(sessionStorage.getItem('userInfo'), true)
     this.myUser = {
@@ -86,6 +88,23 @@ export class CommunicationComponent implements OnInit {
         message: this.writeText,
       })
     }
+    let messageInNotification = ''
+    if (this.writeText.length < 10) {
+      messageInNotification = this.writeText
+    } else {
+      messageInNotification = this.writeText.substring(0, 9) + '...'
+    }
+    const notifyData = {
+      type: 'Chat',
+      title: this.myUser.display_name + ' has messaged you!',
+      message: messageInNotification,
+      status: 'unread',
+      from: this.myUser,
+      url: 'communication',
+    }
+    notifyData['time'] = '' + new Date()
+    this.fbSrv.sendNotification(notifyData, 'notifications_' + this.selectedContact.id)
+
     this.writeText = ''
   }
 

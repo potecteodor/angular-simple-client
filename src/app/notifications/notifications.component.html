@@ -18,8 +18,8 @@
   <mat-list-item *ngFor="let item of notifications">
     <div fxLayout="row" fxLayoutAlign="space-between start" fxFill>
       <div (click)="goTo(item.url)" fxLayout="column" fxLayoutAlign="center start">
-        <span class="notifyTitle">{{item.message}}</span>
-        <span>{{item.data}}</span>
+        <span class="notifyTitle">{{item.title}}</span>
+        <span>{{item.message}}</span>
       </div>
       <div>
         <span *ngIf="item.time">{{item.time| date:"medium"}}</span>

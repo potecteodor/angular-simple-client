@@ -2,6 +2,8 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { MatDialog, MatSnackBar } from '@angular/material'
 import { CommonPopupComponent } from '../../../common-popup/common-popup.component'
+import { CryptService } from '../../../core/services/crypt.service'
+import { FireBaseService } from '../../../notifications/firebase.service'
 import { CollaboratorsService } from '../collaborators.service'
 
 @Component({
@@ -18,7 +20,8 @@ export class AddCollaboratorComponent implements OnInit {
     private fb: FormBuilder,
     private srv: CollaboratorsService,
     public dialog: MatDialog,
-    public snackBar: MatSnackBar
+    public snackBar: MatSnackBar,
+    private fbSrv: FireBaseService
   ) {}
 
   ngOnInit() {
@@ -65,6 +68,20 @@ export class AddCollaboratorComponent implements OnInit {
           dialogRef.afterClosed().subscribe((action: any) => {
             if (action === 'ok') {
               this.srv.addCollaborator(d.id).subscribe(data => {
+                const myUser = CryptService.decrypt(
+                  sessionStorage.getItem('userInfo'),
+                  true
+                )
+                const notifyData = {
+                  type: 'Collaborator',
+                  title: 'New Collaborator!',
+                  message: myUser.display_name + ' has added you as a collaborator!',
+                  status: 'unread',
+                  from: myUser,
+                  url: 'collaborators',
+                }
+                notifyData['time'] = '' + new Date()
+                this.fbSrv.sendNotification(notifyData, 'notifications_' + d.id)
                 if (data) {
                   this.onClose()
                   this.eventOutput.emit('add')
