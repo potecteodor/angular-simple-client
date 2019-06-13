@@ -1,0 +1,29 @@
+<div class="notificationContainer">
+  <mat-toolbar class="app-color-secondary-900">
+    <mat-icon>notifications</mat-icon>Notifications
+  </mat-toolbar>
+</div>
+
+<div fxLayout="column" style="margin-top: 100px" fxLayoutAlign="center center" *ngIf="notifications.length===0">
+  <div fxLayout="row" fxLayoutAlign="center center">
+    <mat-icon class="notification-icon">notifications</mat-icon>
+  </div>
+  <br />
+  <div class="notification-icon-text" fxLayout="row" fxLayoutAlign="center center">
+    No Notifications
+  </div>
+</div>
+
+<mat-nav-list class="custom-navy-50">
+  <mat-list-item *ngFor="let item of notifications">
+    <div fxLayout="row" fxLayoutAlign="space-between start" fxFill>
+      <div (click)="goTo(item.url)" fxLayout="column" fxLayoutAlign="center start">
+        <span class="notifyTitle">{{item.message}}</span>
+        <span>{{item.data}}</span>
+      </div>
+      <div>
+        <span *ngIf="item.time">{{item.time| date:"medium"}}</span>
+      </div>
+    </div>
+  </mat-list-item>
+</mat-nav-list>

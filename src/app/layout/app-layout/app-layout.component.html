@@ -1,15 +1,18 @@
-<app-top-navigation [sideNav]="drawer"></app-top-navigation>
+<app-top-navigation (notificationToggle)="notificationToggle($event)" [sideNav]="drawer"></app-top-navigation>
 <mat-progress-bar mode="indeterminate" color="warn" *ngIf="loading">
 </mat-progress-bar>
 
 <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav #drawer class="sidenav mat-elevation-z1 app-color-secondary-50"
-      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
-      [opened]="!(isHandset$ | async)">
-      <app-left-navigation></app-left-navigation>
-    </mat-sidenav>
-    <mat-sidenav-content>
-      <!-- Add Content Here -->
-      <router-outlet *ngIf="true"></router-outlet>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
+  <mat-sidenav #drawer class="sidenav mat-elevation-z1 app-color-secondary-50"
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="!(isHandset$ | async)">
+    <app-left-navigation></app-left-navigation>
+  </mat-sidenav>
+  <mat-sidenav #notificationPanel position="end" mode="over" [opened]="false">
+    <app-notifications></app-notifications>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <!-- Add Content Here -->
+    <router-outlet *ngIf="true"></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

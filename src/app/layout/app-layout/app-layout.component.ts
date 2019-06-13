@@ -1,15 +1,18 @@
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
-import { NavigationEnd, NavigationStart, Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout'
+import { Component, HostBinding, OnDestroy, OnInit, ViewChild } from '@angular/core'
+import { MatSidenav } from '@angular/material'
+import { NavigationEnd, NavigationStart, Router } from '@angular/router'
+import { Observable } from 'rxjs'
+import { map } from 'rxjs/operators'
 
 @Component({
   selector: 'app-app-layout',
   templateUrl: './app-layout.component.html',
-  styleUrls: ['./app-layout.component.scss']
+  styleUrls: ['./app-layout.component.scss'],
 })
 export class AppLayoutComponent implements OnInit, OnDestroy {
+  @ViewChild('notificationPanel') notificationPanel: MatSidenav
+
   user: any
 
   loading = true
@@ -54,13 +57,19 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
     this.setData()
   }
 
+  notificationToggle(ev) {
+    if (ev === 'toggle') {
+      this.notificationPanel.toggle()
+    }
+  }
+
   onMessageChange(data) {
     this.messages = data
   }
 
-  setData() { }
+  setData() {}
 
-  logout() { }
+  logout() {}
 
   ngOnDestroy() {
     // avoid memory leaks here by cleaning up after ourselves. If we
@@ -70,5 +79,4 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
       this.navigationSubscription.unsubscribe()
     }
   }
-
 }

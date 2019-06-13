@@ -6,7 +6,7 @@
       </button>
       <span>Project Manager</span>
     </div>
-    <div>
+    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px">
       <button mat-button [matMenuTriggerFor]="menu">
         <div fxFlex fxLayout="row" fxLayoutGap="12px" fxLayoutAlign="space-between center">
           <img class="toolbar_avatar" [src]="user.avatar || 'assets/images/default-profile.png'" />
@@ -25,9 +25,9 @@
           <mat-icon>power_off</mat-icon>Logout
         </button>
       </mat-menu>
-      <!--  <button mat-button matTooltip="Logout" (click)="logout()">
-        <mat-icon>power_off</mat-icon>Logout
-      </button> -->
+      <button mat-button matTooltip="Notifications" (click)="onNotificationClick()">
+        <mat-icon [matBadge]="notificationsNumber" matBadgePosition="below after">notifications</mat-icon>
+      </button>
     </div>
   </div>
 </mat-toolbar>

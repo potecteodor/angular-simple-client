@@ -1,5 +1,5 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout'
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { MatDialog, MatSidenav, MatSnackBar } from '@angular/material'
 import { Router } from '@angular/router'
 import { Observable } from 'rxjs'
@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators'
 import { CryptService } from '../../core/services/crypt.service'
 import { UserService } from '../../core/services/user.service'
 import { MyProfileComponent } from '../../my-profile/my-profile.component'
+import { NotificationsService } from '../../notifications/notifications.service'
 import { ChangePassComponent } from '../../screens/auth/change-pass/change-pass.component'
 
 @Component({
@@ -21,6 +22,11 @@ export class TopNavigationComponent implements OnInit {
 
   user: any
 
+  @Output()
+  notificationToggle = new EventEmitter()
+
+  notificationsNumber
+
   @Input()
   sideNav: MatSidenav
 
@@ -29,16 +35,24 @@ export class TopNavigationComponent implements OnInit {
     public router: Router,
     public dialog: MatDialog,
     public snackBar: MatSnackBar,
-    public userSrv: UserService
+    public userSrv: UserService,
+    public srv: NotificationsService
   ) {}
 
   ngOnInit() {
+    this.srv.currentNumber.subscribe(d => {
+      this.notificationsNumber = d
+    })
     this.setData()
     this.userSrv.getOne(this.user.id).subscribe(d => {
       if (d[0].avatar !== this.user.avatar) {
         this.user = d[0]
       }
     })
+  }
+
+  onNotificationClick() {
+    this.notificationToggle.emit('toggle')
   }
 
   onProfile() {
@@ -53,6 +67,10 @@ export class TopNavigationComponent implements OnInit {
         sessionStorage.setItem('userInfo', CryptService.crypt(d))
       })
     })
+  }
+
+  onNotificationsClick() {
+    this.notificationToggle.emit('toggle')
   }
 
   setData() {

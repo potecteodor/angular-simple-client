@@ -1,0 +1,27 @@
+.notificationContainer {
+  min-width: 600px;
+  max-width: 600px;
+}
+
+.notifyTitle {
+  font-weight: bold;
+}
+
+:host /deep/ .mat-list-item-content {
+  padding-bottom: 30px !important;
+}
+
+.notification-icon {
+  font-size: 128px !important;
+  color: grey;
+  width: 128px !important;
+  height: 128px !important;
+  min-width: 128px !important;
+  min-height: 128px !important;
+  line-height: 128px !important;
+}
+
+.notification-icon-text {
+  font-size: 24px !important;
+  color: grey;
+}

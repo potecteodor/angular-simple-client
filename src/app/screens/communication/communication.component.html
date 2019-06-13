@@ -13,8 +13,8 @@
         <mat-nav-list>
           <mat-list-item [ngClass]="{'app-color-primary': selectedContact.id === item.id}"
             *ngFor="let item of collaborators">
-            <div fxLayout="row" fxLayoutAlign="space-between center" fxFill>
-              <div (click)="onContactClick(item)" fxLayout="row" fxLayoutAlign="center center">
+            <div fxLayout="row" fxLayoutAlign="space-between center" fxFill (click)="onContactClick(item)">
+              <div fxLayout="row" fxLayoutAlign="center center">
                 <span [ngClass]="onlineColabs[item.id] ? 'online' : 'offline'"></span>
                 <img class="avatarImg" [src]="item.avatar || 'assets/images/default-profile.png'" />
                 <span>{{item.display_name}}</span>
