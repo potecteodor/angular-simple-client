@@ -85,7 +85,7 @@
               <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #actionMenu="matMenu">
-              <button mat-menu-item (click)="onTaskClick(row)">
+              <button mat-menu-item (click)="onRowClick(row)">
                 <mat-icon>remove_red_eye</mat-icon>
                 <span>View</span>
               </button>
@@ -104,7 +104,9 @@
 
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="rowHover" (click)="onRowClick(row)">
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+          [ngClass]="{'app-color-primary': selectedTask && selectedTask.id === row.id}" class="rowHover"
+          (click)="onRowClick(row)">
         </tr>
       </table>
       <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>

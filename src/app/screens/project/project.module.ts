@@ -20,6 +20,7 @@ import { ProjectDetailResolverService } from './project-detail/project-detail-re
 import { ProjectDetailComponent } from './project-detail/project-detail.component'
 import { ProjectComponent } from './project.component'
 import { ProjectService } from './project.service'
+import { TaskDetailInProjectComponent } from './task-detail-in-project/task-detail-in-project.component'
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { ProjectService } from './project.service'
     CreateProjectComponent,
     EditProjectComponent,
     ProjectDetailComponent,
+    TaskDetailInProjectComponent,
     CreateTaskInProjectComponent,
   ],
   imports: [
@@ -53,6 +55,7 @@ import { ProjectService } from './project.service'
     CommonPopupComponent,
     ProfilePopupComponent,
     CreateTaskInProjectComponent,
+    TaskDetailInProjectComponent,
   ],
   providers: [
     ProjectService,

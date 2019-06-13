@@ -1,6 +1,15 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
-import { MatSnackBar } from '@angular/material'
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core'
+import { MatDialog, MatSnackBar } from '@angular/material'
 import { CryptService } from '../../../core/services/crypt.service'
+import { ProfilePopupComponent } from '../../../profile-popup/profile-popup.component'
 import { ProjectService } from '../../project/project.service'
 import { TaskService } from '../task.service'
 
@@ -9,7 +18,7 @@ import { TaskService } from '../task.service'
   templateUrl: './edit-task.component.html',
   styleUrls: ['./edit-task.component.scss'],
 })
-export class EditTaskComponent implements OnInit {
+export class EditTaskComponent implements OnInit, OnChanges {
   statuses = ['Not Started', 'Started', 'Testing', 'Completed']
   priorities = ['Low', 'Medium', ' High', 'Urgent']
   @Output()
@@ -28,7 +37,8 @@ export class EditTaskComponent implements OnInit {
     private srv: TaskService,
     // private srvCollab: CollaboratorsService,
     private snackBar: MatSnackBar,
-    private pSrv: ProjectService
+    private pSrv: ProjectService,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -39,6 +49,12 @@ export class EditTaskComponent implements OnInit {
     this.srv.getProject(this.task.id).subscribe(project => {
       this.project = project[0]
     })
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.task.previousValue) {
+      this.getMembers()
+    }
   }
 
   projectSelect() {
@@ -54,7 +70,16 @@ export class EditTaskComponent implements OnInit {
     return o1 && o2 && o1 === o2
   }
 
+  onMemberClick(member) {
+    this.dialog.open(ProfilePopupComponent, {
+      width: '400px',
+      disableClose: true,
+      data: member,
+    })
+  }
+
   getMembers() {
+    this.members = []
     this.srv.getTaskMembers(this.task.id).subscribe(d => {
       if (d && d.length > 0) {
         d.map(element => {

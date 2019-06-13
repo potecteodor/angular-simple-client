@@ -2,16 +2,20 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   OnInit,
   Output,
+  SimpleChanges,
   ViewEncapsulation,
 } from '@angular/core'
 import { MatDialog, MatSnackBar } from '@angular/material'
 import { IProject } from '../../../core/interfaces/project.interface'
 import { CryptService } from '../../../core/services/crypt.service'
+import { ProfilePopupComponent } from '../../../profile-popup/profile-popup.component'
 import { CollaboratorsService } from '../../collaborators/collaborators.service'
 import { CreateTaskInProjectComponent } from '../create-task-in-project/create-task-in-project.component'
 import { ProjectService } from '../project.service'
+import { TaskDetailInProjectComponent } from '../task-detail-in-project/task-detail-in-project.component'
 
 @Component({
   selector: 'app-edit-project',
@@ -19,7 +23,7 @@ import { ProjectService } from '../project.service'
   styleUrls: ['./edit-project.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class EditProjectComponent implements OnInit {
+export class EditProjectComponent implements OnInit, OnChanges {
   @Output()
   eventOutput = new EventEmitter()
   @Input() isEditable
@@ -53,6 +57,13 @@ export class EditProjectComponent implements OnInit {
     this.project.end_date = new Date(this.project.end_date)
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.project.previousValue) {
+      this.getTasks()
+      this.getMembers()
+    }
+  }
+
   getTasks() {
     this.srv.getTasks(this.project.id).subscribe(tasks => {
       this.tasks = tasks
@@ -72,7 +83,17 @@ export class EditProjectComponent implements OnInit {
     return o1 && o2 && o1 === o2.id
   }
 
+  onMemberClick(member) {
+    this.dialog.open(ProfilePopupComponent, {
+      width: '400px',
+      disableClose: true,
+      data: member,
+    })
+  }
+
   getMembers() {
+    this.membersFullObject = []
+    this.members = []
     this.srv.getProjectMembers(this.project.id).subscribe(d => {
       if (d && d.length > 0) {
         d.map(element => {
@@ -80,7 +101,6 @@ export class EditProjectComponent implements OnInit {
           this.members.push(element.id)
         })
       }
-      console.log(this.members)
     })
   }
 
@@ -97,6 +117,14 @@ export class EditProjectComponent implements OnInit {
     dialogRef.afterClosed().subscribe(action => {
       this.getTasks()
     })
+  }
+
+  onTaskClick(task) {
+    const dialogRef = this.dialog.open(TaskDetailInProjectComponent, {
+      data: task,
+      panelClass: 'addTaskDialogClass',
+    })
+    dialogRef.afterClosed().subscribe(action => {})
   }
 
   onEdit() {

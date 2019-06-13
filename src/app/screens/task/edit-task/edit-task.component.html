@@ -53,23 +53,15 @@
               Task Members
             </mat-panel-title>
           </mat-expansion-panel-header>
+          <span *ngIf="members.length<1"><i>No members in this project</i></span>
           <mat-nav-list>
             <mat-list-item *ngFor="let member of members">
-              <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
+              <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex (click)="onMemberClick(member)">
                 <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" fxFlex>
                   <img class="avatarImg" [src]="member.avatar || 'assets/images/default-profile.png'" />
                   {{member.display_name}}({{member.email}})
                 </div>
                 <div>
-                  <button mat-icon-button [matMenuTriggerFor]="menu">
-                    <mat-icon>more_vert</mat-icon>
-                  </button>
-                  <mat-menu #menu="matMenu">
-                    <button mat-menu-item>
-                      <mat-icon>remove_red_eye</mat-icon>
-                      <span>View Profile</span>
-                    </button>
-                  </mat-menu>
                 </div>
               </div>
             </mat-list-item>

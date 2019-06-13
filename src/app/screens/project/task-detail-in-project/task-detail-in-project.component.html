@@ -1,0 +1,40 @@
+<mat-toolbar fxLayout="row" fxLayoutAlign="space-between center">
+  Task Detail
+  <div>
+    <button mat-icon-button matTooltip="Close" (click)="onClose()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>
+<div class="addTaskForm">
+  <div fxLayout="column">
+    <div fxLayout="column" *ngIf="task.project_id">
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <mat-label class="secondary-text">Start Date:</mat-label>
+        <mat-label>{{task.start_date | date:'mediumDate'}}</mat-label>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <mat-label class="secondary-text">End Date:</mat-label>
+        <mat-label>{{task.end_date | date:'mediumDate'}}</mat-label>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <mat-label class="secondary-text">Priority:</mat-label>
+        <mat-label>{{task.priority}}</mat-label>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <mat-label class="secondary-text">Status:</mat-label>
+        <mat-label>{{task.status}}</mat-label>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <mat-label class="secondary-text">Description:</mat-label>
+        <mat-label>{{task.description}}</mat-label>
+      </div>
+      <div fxLayout="row" fxLayoutGap="15px" *ngIf="members.length>0">
+        <mat-label class="secondary-text">Members:</mat-label>
+        <mat-chip-list>
+          <mat-chip *ngFor="let member of members"> {{member.display_name}} ({{member.email}})</mat-chip>
+        </mat-chip-list>
+      </div>
+    </div>
+  </div>
+</div>

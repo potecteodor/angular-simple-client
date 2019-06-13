@@ -9,6 +9,8 @@ import { RouterModule } from '@angular/router'
 import { CommonPopupComponent } from '../../common-popup/common-popup.component'
 import { CommonPopupModule } from '../../common-popup/common-popup.module'
 import { AppSharedModule } from '../../modules/app-shared.module'
+import { ProfilePopupComponent } from '../../profile-popup/profile-popup.component'
+import { ProfilePopupModule } from '../../profile-popup/profile-popup.module'
 import { ProjectService } from '../project/project.service'
 import { CreateTaskComponent } from './create-task/create-task.component'
 import { EditTaskComponent } from './edit-task/edit-task.component'
@@ -29,6 +31,7 @@ import { TaskService } from './task.service'
     CommonPopupModule,
     MatChipsModule,
     MatExpansionModule,
+    ProfilePopupModule,
     RouterModule.forChild([
       {
         path: '',
@@ -50,6 +53,6 @@ import { TaskService } from './task.service'
     { provide: MatDialogRef, useValue: {} },
     { provide: MAT_DIALOG_DATA, useValue: {} },
   ],
-  entryComponents: [CommonPopupComponent, CreateTaskComponent],
+  entryComponents: [CommonPopupComponent, CreateTaskComponent, ProfilePopupComponent],
 })
 export class TaskModule {}
