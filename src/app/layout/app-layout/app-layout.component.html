@@ -3,7 +3,7 @@
 </mat-progress-bar>
 
 <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav #drawer class="sidenav mat-elevation-z4 app-color-secondary-50"
+    <mat-sidenav #drawer class="sidenav mat-elevation-z1 app-color-secondary-50"
       [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
       [opened]="!(isHandset$ | async)">
       <app-left-navigation></app-left-navigation>

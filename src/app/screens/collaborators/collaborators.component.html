@@ -4,10 +4,17 @@
       <mat-icon>people</mat-icon>
       <span>Collaborators</span>
     </div>
-    <button mat-button (click)="sidenav.open()">
-      <mat-icon>add</mat-icon>
-      Add Collaborator
-    </button>
+    <div>
+      <mat-form-field class="searchField" >
+        <input matInput autocomplete="searchField" (keyup)="applyFilter($event.target.value)" placeholder="Search...">
+        <mat-icon matPrefix>search</mat-icon>
+      </mat-form-field>
+      <button mat-button (click)="sidenav.open()">
+        <mat-icon>add</mat-icon>
+        Add Collaborator
+      </button>
+    </div>
+
   </mat-toolbar>
   <mat-sidenav #sidenav disableClose="true" position="end" mode="over" opened="false">
     <app-add-collaborator (eventOutput)="eventListener($event)">
@@ -18,11 +25,7 @@
     No collaborators! Add one.
   </div>
 
-  <div *ngIf="collaborators.length>0">
-    <mat-form-field class="searchField">
-      <input matInput autocomplete="searchField" (keyup)="applyFilter($event.target.value)" placeholder="Search...">
-      <mat-icon matPrefix>search</mat-icon>
-    </mat-form-field>
+  <div *ngIf="collaborators.length>0" class="inner">
 
     <div class="mat-elevation-z8">
       <table mat-table [dataSource]="dataSource" matSort>
