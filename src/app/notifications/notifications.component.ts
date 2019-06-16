@@ -16,14 +16,14 @@ export class NotificationsComponent implements OnInit {
   notificationsNumber = 0
 
   constructor(
-    private srv: FireBaseService,
+    private firebaseService: FireBaseService,
     public snackBar: MatSnackBar,
     public router: Router,
     public nSrv: NotificationsService
   ) {}
 
   ngOnInit() {
-    this.srv.getNotifications().subscribe(d => {
+    this.firebaseService.getNotifications().subscribe(d => {
       this.notifications = []
       this.notificationsNumber = 0
       d.map(el => {

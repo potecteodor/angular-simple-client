@@ -17,7 +17,6 @@ export class FireBaseService {
   }
 
   sendNotification(data: any, to: string) {
-    console.log(2)
     this.firebase.list(to).push(data)
   }
 }
