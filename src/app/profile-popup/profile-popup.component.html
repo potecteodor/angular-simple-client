@@ -3,9 +3,10 @@
   <h1>{{userProfile.display_name}}</h1>
 </div>
 <!-- <input type="file" (change)="fileOpen($event)"> -->
-<span>Email: {{userProfile.email}}</span>
-<br />
-<span>Phone: {{userProfile.phone | mask:'(0000) 000-0000'}}</span>
+<div fxLayout="column" fxLayoutGap="10px">
+  <span><b>Email:</b> {{userProfile.email}}</span>
+  <span><b>Phone:</b> {{userProfile.phone | mask:'(0000) 000-0000'}}</span>
+</div>
 <div mat-dialog-actions align="end">
   <!-- <button mat-button (click)="onSave()">Save</button> -->
   <button mat-button (click)="onBtnClick('close')" cdkFocusInitial>close</button>

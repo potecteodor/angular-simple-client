@@ -1,5 +1,5 @@
 <div *ngIf="!isEditable">
-  <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center">
+  <mat-toolbar class="app-color-primary-500" fxLayout="row" fxLayoutAlign="space-between center">
     {{project.name}}
     <div>
       <button *ngIf="project.created_by_id===userID" mat-icon-button matTooltip="Edit" (click)="isEditable=true">
@@ -17,32 +17,34 @@
         <mat-expansion-panel expanded="true" class="mat-elevation-z6">
           <mat-expansion-panel-header>
             <mat-panel-title>
-              Project Information
+              <b>Project Information</b>
             </mat-panel-title>
           </mat-expansion-panel-header>
-          <div fxLayout="row" fxLayoutAlign="space-between center">
-            <mat-label class="secondary-text">Project Owner:</mat-label>
-            <mat-label *ngIf="projectOwner">{{projectOwner.display_name}}</mat-label>
-          </div>
+          <div style="line-height: 30px">
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+              <mat-label class="secondary-text">Project Owner:</mat-label>
+              <mat-label *ngIf="projectOwner">{{projectOwner.display_name}}</mat-label>
+            </div>
 
-          <div fxLayout="row" fxLayoutAlign="space-between center">
-            <mat-label class="secondary-text">Start Date:</mat-label>
-            <mat-label>{{project.start_date | date:'mediumDate'}}</mat-label>
-          </div>
-          <div fxLayout="row" fxLayoutAlign="space-between center">
-            <mat-label class="secondary-text">End Date:</mat-label>
-            <mat-label>{{project.end_date | date:'mediumDate'}}</mat-label>
-          </div>
-          <div fxLayout="row" fxLayoutAlign="space-between center">
-            <mat-label class="secondary-text">Description:</mat-label>
-            <mat-label>{{project.description}}</mat-label>
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+              <mat-label class="secondary-text">Start Date:</mat-label>
+              <mat-label>{{project.start_date | date:'mediumDate'}}</mat-label>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+              <mat-label class="secondary-text">End Date:</mat-label>
+              <mat-label>{{project.end_date | date:'mediumDate'}}</mat-label>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+              <mat-label class="secondary-text">Description:</mat-label>
+              <mat-label>{{project.description}}</mat-label>
+            </div>
           </div>
         </mat-expansion-panel>
 
         <mat-expansion-panel expanded="true" class="mat-elevation-z6">
           <mat-expansion-panel-header>
             <mat-panel-title>
-              Project Members
+              <b>Project Members</b>
             </mat-panel-title>
           </mat-expansion-panel-header>
           <span *ngIf="membersFullObject.length<1"><i>No members in this project</i></span>
@@ -63,7 +65,7 @@
         <mat-expansion-panel expanded="true" class="mat-elevation-z6">
           <mat-expansion-panel-header>
             <mat-panel-title fxLayout="row" fxLayoutGap="50px" fxLayoutAlign="start center" (click)="addTask()">
-              <span>Tasks</span>
+              <span><b>Tasks</b></span>
               <button class="app-color-secondary-500" mat-button>
                 <mat-icon>add</mat-icon>
                 Add task
@@ -91,7 +93,7 @@
 </div>
 
 <div *ngIf="isEditable">
-  <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center">
+  <mat-toolbar class="app-color-primary-500" fxLayout="row" fxLayoutAlign="space-between center">
     Edit Project
     <div>
       <button mat-icon-button matTooltip="Close" (click)="onClose()">
@@ -99,9 +101,9 @@
       </button>
     </div>
   </mat-toolbar>
-  <div class="addProjectForm">
+  <div class="addProjectFormEdit">
     <br />
-    <div fxLayout="column">
+    <div fxLayout="column" style="padding:10px">
       <mat-form-field>
         <mat-label>Name</mat-label>
         <input matInput type="text" [(ngModel)]="project.name">

@@ -1,5 +1,5 @@
 <div *ngIf="!isEditable">
-  <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center">
+  <mat-toolbar class="app-color-primary-500" fxLayout="row" fxLayoutAlign="space-between center">
     {{task.subject}}
     <div>
       <button *ngIf="task.created_by===userID" mat-icon-button matTooltip="Edit" (click)="isEditable=true">
@@ -20,30 +20,32 @@
               Task Information
             </mat-panel-title>
           </mat-expansion-panel-header>
-          <div fxLayout="row" fxLayoutAlign="space-between center">
-            <mat-label class="secondary-text">Project: </mat-label>
-            <mat-label *ngIf="project">{{project.name}}</mat-label>
-          </div>
+          <div style="line-height: 30px">
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+              <mat-label class="secondary-text">Project: </mat-label>
+              <mat-label *ngIf="project">{{project.name}}</mat-label>
+            </div>
 
-          <div fxLayout="row" fxLayoutAlign="space-between center">
-            <mat-label class="secondary-text">Start Date:</mat-label>
-            <mat-label>{{task.start_date | date:'mediumDate'}}</mat-label>
-          </div>
-          <div fxLayout="row" fxLayoutAlign="space-between center">
-            <mat-label class="secondary-text">End Date:</mat-label>
-            <mat-label>{{task.end_date | date:'mediumDate'}}</mat-label>
-          </div>
-          <div fxLayout="row" fxLayoutAlign="space-between center">
-            <mat-label class="secondary-text">Priority:</mat-label>
-            <mat-label>{{task.priority}}</mat-label>
-          </div>
-          <div fxLayout="row" fxLayoutAlign="space-between center">
-            <mat-label class="secondary-text">Status:</mat-label>
-            <mat-label>{{task.status}}</mat-label>
-          </div>
-          <div fxLayout="row" fxLayoutAlign="space-between center">
-            <mat-label class="secondary-text">Description:</mat-label>
-            <mat-label>{{task.description}}</mat-label>
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+              <mat-label class="secondary-text">Start Date:</mat-label>
+              <mat-label>{{task.start_date | date:'mediumDate'}}</mat-label>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+              <mat-label class="secondary-text">End Date:</mat-label>
+              <mat-label>{{task.end_date | date:'mediumDate'}}</mat-label>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+              <mat-label class="secondary-text">Priority:</mat-label>
+              <mat-label>{{task.priority}}</mat-label>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+              <mat-label class="secondary-text">Status:</mat-label>
+              <mat-label>{{task.status}}</mat-label>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+              <mat-label class="secondary-text">Description:</mat-label>
+              <mat-label>{{task.description}}</mat-label>
+            </div>
           </div>
         </mat-expansion-panel>
 
@@ -67,7 +69,7 @@
             </mat-list-item>
           </mat-nav-list>
         </mat-expansion-panel>
-        -
+
       </mat-accordion>
 
       <br />
@@ -82,7 +84,7 @@
 </div>
 
 <div *ngIf="isEditable">
-  <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center">
+  <mat-toolbar class="app-color-primary-500" fxLayout="row" fxLayoutAlign="space-between center">
     Edit Task
     <div>
       <button mat-icon-button matTooltip="Close" (click)="onClose()">
@@ -92,7 +94,7 @@
   </mat-toolbar>
   <div class="addTaskForm">
     <br />
-    <div fxLayout="column">
+    <div fxLayout="column" style="padding:10px">
       <div fxLayout="column" *ngIf="task.project_id">
         <mat-form-field>
           <mat-label>Subject</mat-label>
