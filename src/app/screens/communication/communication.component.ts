@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, ViewEncapsulation } from '@angular/core'
 import { MatDialog } from '@angular/material'
 import { CryptService } from '../../core/services/crypt.service'
 import { UserService } from '../../core/services/user.service'
@@ -10,6 +10,7 @@ import { CommunicationService } from './communication.service'
   selector: 'app-communication',
   templateUrl: './communication.component.html',
   styleUrls: ['./communication.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class CommunicationComponent implements OnInit {
   collaborators = []

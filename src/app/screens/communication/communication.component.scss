@@ -1,5 +1,6 @@
 .chatWriter {
-  height: 100%
+  overflow: auto;
+  height: calc(100%);
 }
 
 .contactList {
@@ -7,33 +8,62 @@
 }
 
 .chatContainer {
-  height: calc(100vh - 193px) !important;
+  height: calc(100vh - 64px) !important;
   padding: 20px;
 }
 
 .writeArea {
   padding: 10px;
-  background-color: rgb(230, 223, 223);
+}
+
+.noContactSelectedParent{
+  display: flex;
+  flex-direction: column;
+  align-items: self-end;
+  height: 100%;
+  justify-content: center;
 }
 
 .noContactSelected {
-  padding: 10px;
-  font-size: 150%;
-  color: rgb(110, 164, 226)
+  font-size: 18px;
+  color: #061221;
+  font-style: italic;
+  padding: 20px;
+  text-align: center;
+  display: block;
+  width: 100%;
 }
 
 .offline {
-  height: 15px;
-  width: 15px;
-  background-color: gray;
-  border-radius: 50%;
-  display: inline-block;
+  background-color: #c7e0e4;
 }
 
 .online {
-  height: 15px;
-  width: 15px;
-  background-color: greenyellow;
+  background-color: #ddff6d;
+}
+
+.mat-list .mat-list-item {
+  padding: 0 10px;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.username {
+  margin-left: 10px;
+}
+
+.online,
+.offline {
   border-radius: 50%;
   display: inline-block;
+  height: 15px;
+  width: 15px;
+  margin-right: 10px;
+}
+
+.mat-form-field-outline {
+  background-color: #fff !important;
+}
+
+.mat-form-field-wrapper {
+  padding-bottom: 0;
 }

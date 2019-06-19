@@ -1,23 +1,23 @@
 <div class="communicationPage" fxFlex>
-  <mat-toolbar>
+ <!--  <mat-toolbar>
     <mat-icon>chat_bubble</mat-icon>Communication
-  </mat-toolbar>
+  </mat-toolbar> -->
   <div class="chatContainer" fxLayout="row" fxLayoutAlign="space-between start" fxFill>
 
     <div class="mat-elevation-z8" fxFill>
       <!-- Contact List -->
-      <div class="contactList mat-elevation-z8" fxLayout="column" fxFlex="30" fxFill>
+      <div class="contactList mat-elevation-z1" fxLayout="column" fxFlex="30" fxFill>
         <mat-toolbar>
           Collaborators
         </mat-toolbar>
         <mat-nav-list>
-          <mat-list-item [ngClass]="{'app-color-primary': selectedContact.id === item.id}"
+          <mat-list-item [ngClass]="{'app-color-secondary-A700': selectedContact.id === item.id}"
             *ngFor="let item of collaborators">
             <div fxLayout="row" fxLayoutAlign="space-between center" fxFill (click)="onContactClick(item)">
               <div fxLayout="row" fxLayoutAlign="center center">
                 <span [ngClass]="onlineColabs[item.id] ? 'online' : 'offline'"></span>
                 <img class="avatarImg" [src]="item.avatar || 'assets/images/default-profile.png'" />
-                <span>{{item.display_name}}</span>
+                <span class="username">{{item.display_name}}</span>
               </div>
               <div>
                 <button mat-icon-button [matMenuTriggerFor]="menu">
@@ -42,15 +42,17 @@
           <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
             <img *ngIf="selectedContact.id!==-1" class="avatarImg"
               [src]="selectedContact.avatar || 'assets/images/default-profile.png'" />
-            {{selectedContact.display_name}}
+              <span class="username">
+                {{selectedContact.display_name}}
+              </span>
           </div>
         </mat-toolbar>
 
         <div class="chatWriter">
-          <div *ngIf="selectedContact.id===-1">
+          <div *ngIf="selectedContact.id===-1" class="noContactSelectedParent">
             <span class="noContactSelected">No contact selected! Please select one to start a conversation.</span>
           </div>
-          <mat-nav-list class="custom-navy-50" *ngIf="selectedContact.id!==-1">
+          <mat-list class="custom-navy-50" *ngIf="selectedContact.id!==-1">
             <mat-list-item *ngFor="let item of messages[selectedContact.id]">
               <div fxLayout="row" fxLayoutAlign="space-between center" fxFill *ngIf="item.from_who.id!==myUser.id">
                 <div fxLayout="row" fxLayoutAlign="center center">
@@ -68,11 +70,11 @@
                 </div>
               </div>
             </mat-list-item>
-          </mat-nav-list>
+          </mat-list>
         </div>
 
         <!--------------Writing Box------------------->
-        <mat-form-field appearance="outline" class="writeArea" floatLabel="never" *ngIf="selectedContact.id!==-1">
+        <mat-form-field appearance="outline" class="writeArea app-color-primary-50 mat-elevation-z1" floatLabel="never" *ngIf="selectedContact.id!==-1">
           <textarea (keydown)="onKeydown($event)" matInput placeholder="Type and hit enter to send message"
             [(ngModel)]="writeText"></textarea>
           <button matSuffix mat-icon-button [matTooltip]="'Send'" (click)="sendMessage()">
